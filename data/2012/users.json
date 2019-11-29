@@ -1,0 +1,127 @@
+[
+  {
+    "user_id": "77140390129844224",
+    "settings": null,
+    "metadata": {
+      "team_name": "LWSS",
+      "avatar": "https://sleepercdn.com/uploads/a73261e534ccb7ed6c2da4087afd5ee1.jpg"
+    },
+    "league_id": "521050726446252032",
+    "is_owner": true,
+    "is_bot": null,
+    "display_name": "thd",
+    "avatar": "1cd2c19bdb6ab9715cbf7a9b35286be7"
+  },
+  {
+    "user_id": "77361676378587136",
+    "settings": null,
+    "metadata": {
+      "team_name": "DjKFTW"
+    },
+    "league_id": "521050726446252032",
+    "is_owner": false,
+    "is_bot": null,
+    "display_name": "DJKJnr",
+    "avatar": "7d72403617ed442b25d0ccbc7c58ccab"
+  },
+  {
+    "user_id": "337210029620883456",
+    "settings": null,
+    "metadata": {
+      "team_name": "Hailvern"
+    },
+    "league_id": "521050726446252032",
+    "is_owner": false,
+    "is_bot": false,
+    "display_name": "BushJohnson",
+    "avatar": "b84c2724c213dddd42c116f39b8cde53"
+  },
+  {
+    "user_id": "337221174670938112",
+    "settings": null,
+    "metadata": {
+      "team_name": "Gerald Siiiiiiiibon"
+    },
+    "league_id": "521050726446252032",
+    "is_owner": false,
+    "is_bot": false,
+    "display_name": "Si2on",
+    "avatar": "a40a15dce0a9cc8f286975f4bac61735"
+  },
+  {
+    "user_id": "337222928615612416",
+    "settings": null,
+    "metadata": {
+      "team_name": "Ha Noi Tigers"
+    },
+    "league_id": "521050726446252032",
+    "is_owner": false,
+    "is_bot": false,
+    "display_name": "rich45",
+    "avatar": "d2a8e6aa2be9d3ca61aa740d4c67bd2d"
+  },
+  {
+    "user_id": "337226046606704640",
+    "settings": null,
+    "metadata": {
+      "team_name": "Jimbo's Chiefs"
+    },
+    "league_id": "521050726446252032",
+    "is_owner": false,
+    "is_bot": false,
+    "display_name": "Jimmie",
+    "avatar": "ff3ff500ebff182172513f70a41fec5f"
+  },
+  {
+    "user_id": "337297176361201664",
+    "settings": null,
+    "metadata": {
+      "team_name": "Wolverhampton Wasters",
+      "mention_pn": "on",
+      "allow_pn": "on"
+    },
+    "league_id": "521050726446252032",
+    "is_owner": true,
+    "is_bot": false,
+    "display_name": "anthonyxyz",
+    "avatar": "fdbed03e0c7152f2d3abba3e21d955e1"
+  },
+  {
+    "user_id": "428943291145265152",
+    "settings": null,
+    "metadata": {
+      "team_name": "Кansas City Chumps",
+      "avatar": "https://sleepercdn.com/uploads/4c041e349feeca6ffbf5294993f6b43e.jpg"
+    },
+    "league_id": "521050726446252032",
+    "is_owner": true,
+    "is_bot": false,
+    "display_name": "jmshelley",
+    "avatar": "c2ee5e2e6f3475fd842ac87cb0f0a72e"
+  },
+  {
+    "user_id": "429243125446230016",
+    "settings": null,
+    "metadata": {
+      "team_name": "Team EZ",
+      "avatar": "https://sleepercdn.com/uploads/5da6651baeb59bf75626d8522f3ef0da.jpg"
+    },
+    "league_id": "521050726446252032",
+    "is_owner": false,
+    "is_bot": false,
+    "display_name": "Karsten",
+    "avatar": "e3b8fa753e226c0bdeb8816e4d613049"
+  },
+  {
+    "user_id": "438629899490553856",
+    "settings": null,
+    "metadata": {
+      "team_name": "THFC"
+    },
+    "league_id": "521050726446252032",
+    "is_owner": false,
+    "is_bot": false,
+    "display_name": "TheDollar",
+    "avatar": "2ae1e831eec95a9228cc0fdd50fa50ee"
+  }
+]

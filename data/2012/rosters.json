@@ -1,0 +1,472 @@
+[
+  {
+    "starters": [
+      "Peyton Manning",
+      "Ray Rice",
+      "Marshawn Lynch",
+      "Kenny Britt",
+      "T.Y. Hilton",
+      "Jimmy Graham",
+      "Knowshon Moreno",
+      "Matt Bryant",
+      "HOU"
+    ],
+    "settings": {
+      "wins": 5,
+      "total_moves": 46,
+      "ties": 0,
+      "losses": 5,
+      "fpts_decimal": 78,
+      "fpts_against_decimal": 10,
+      "fpts_against": 1249.1,
+      "fpts": 1423
+    },
+    "roster_id": 1,
+    "players": [
+      "Kenny Britt",
+      "Matt Bryant",
+      "Hakeem Nicks",
+      "Marshawn Lynch",
+      "Danario Alexander",
+      "Mike Williams",
+      "David Wilson",
+      "T.Y. Hilton",
+      "Ray Rice",
+      "Robert Turbin",
+      "Peyton Manning",
+      "Jimmy Graham",
+      "Knowshon Moreno",
+      "Bernard Pierce",
+      "HOU"
+    ],
+    "owner_id": "77140390129844224",
+    "metadata": {
+      "record": "WWLWLLWWLWWLWW"
+    },
+    "league_id": "521050726446252032",
+    "co_owners": null
+  },
+  {
+    "starters": [
+      "421",
+      "5890",
+      "4029",
+      "2374",
+      "4040",
+      "5844",
+      "4663",
+      "2747",
+      "BAL"
+    ],
+    "settings": {
+      "wins": 7,
+      "total_moves": 17,
+      "ties": 0,
+      "losses": 7,
+      "fpts_decimal": 50,
+      "fpts_against_decimal": 34,
+      "fpts_against": 1161,
+      "fpts": 1296
+    },
+    "roster_id": 2,
+    "players": [
+      "2374",
+      "2747",
+      "3209",
+      "4018",
+      "4029",
+      "4040",
+      "421",
+      "4663",
+      "49",
+      "4983",
+      "5844",
+      "5890",
+      "5987",
+      "6943",
+      "954",
+      "BAL"
+    ],
+    "owner_id": "337210029620883456",
+    "metadata": {
+      "record": "WLLWWLWWLLLWWL"
+    },
+    "league_id": "521050726446252032",
+    "co_owners": null
+  },
+  {
+    "starters": [
+      "138",
+      "1386",
+      "3164",
+      "4981",
+      "2319",
+      "5012",
+      "6813",
+      "391",
+      "WAS"
+    ],
+    "settings": {
+      "wins": 6,
+      "total_moves": 87,
+      "ties": 0,
+      "losses": 8,
+      "fpts_decimal": 40,
+      "fpts_against_decimal": 22,
+      "fpts_against": 1424,
+      "fpts": 1271
+    },
+    "roster_id": 3,
+    "players": [
+      "138",
+      "1386",
+      "1408",
+      "1817",
+      "2319",
+      "24",
+      "3164",
+      "391",
+      "4981",
+      "5012",
+      "5347",
+      "6813",
+      "6819",
+      "6845",
+      "WAS"
+    ],
+    "owner_id": "428943291145265152",
+    "metadata": {
+      "record": "LLWLLWLWWLWLLW"
+    },
+    "league_id": "521050726446252032",
+    "co_owners": null
+  },
+  {
+    "starters": [
+      "1234",
+      "5980",
+      "3594",
+      "3225",
+      "1352",
+      "5022",
+      "5937",
+      "7042",
+      "ARI"
+    ],
+    "settings": {
+      "wins": 7,
+      "total_moves": 28,
+      "ties": 0,
+      "losses": 7,
+      "fpts_decimal": 96,
+      "fpts_against_decimal": 48,
+      "fpts_against": 1364,
+      "fpts": 1336
+    },
+    "roster_id": 4,
+    "players": [
+      "1234",
+      "1352",
+      "3225",
+      "3594",
+      "3969",
+      "4217",
+      "5022",
+      "5170",
+      "5248",
+      "5937",
+      "5980",
+      "6007",
+      "6130",
+      "6918",
+      "7042",
+      "ARI"
+    ],
+    "owner_id": "337226046606704640",
+    "metadata": {
+      "record": "WLLLWWWLWLWLLW"
+    },
+    "league_id": "521050726446252032",
+    "co_owners": null
+  },
+  {
+    "starters": [
+      "6797",
+      "6955",
+      "2320",
+      "2133",
+      "5846",
+      "4602",
+      "2197",
+      "503",
+      "SEA"
+    ],
+    "settings": {
+      "wins": 9,
+      "total_moves": 49,
+      "ties": 0,
+      "losses": 5,
+      "fpts_decimal": 78,
+      "fpts_against_decimal": 0,
+      "fpts_against": 1305,
+      "fpts": 1448
+    },
+    "roster_id": 7,
+    "players": [
+      "2133",
+      "2197",
+      "2315",
+      "2320",
+      "2410",
+      "4187",
+      "4602",
+      "503",
+      "515",
+      "536",
+      "5846",
+      "6156",
+      "6797",
+      "6955",
+      "SEA"
+    ],
+    "owner_id": "337297176361201664",
+    "metadata": {
+      "record": "LWLWWWWLLWWWWL"
+    },
+    "league_id": "521050726446252032",
+    "co_owners": null
+  },
+  {
+    "starters": [
+      "4017",
+      "2749",
+      "3242",
+      "1689",
+      "1479",
+      "4066",
+      "2309",
+      "5119",
+      "SF"
+    ],
+    "settings": {
+      "wins": 8,
+      "total_moves": 13,
+      "ties": 0,
+      "losses": 6,
+      "fpts_decimal": 58,
+      "fpts_against_decimal": 1,
+      "fpts_against": 1289,
+      "fpts": 1457
+    },
+    "roster_id": 8,
+    "players": [
+      "1479",
+      "1689",
+      "2309",
+      "2749",
+      "3242",
+      "4017",
+      "4066",
+      "5000",
+      "5119",
+      "6886",
+      "6945",
+      "DAL",
+      "HOU",
+      "SF"
+    ],
+    "owner_id": "337221174670938112",
+    "metadata": {
+      "record": "WLWLLWWWWWWLLL"
+    },
+    "league_id": "521050726446252032"
+  },
+  {
+    "starters": [
+      "167",
+      "6790",
+      "4137",
+      "1426",
+      "1992",
+      "3202",
+      "6794",
+      "4227",
+      "IND"
+    ],
+    "settings": {
+      "wins": 7,
+      "total_moves": 26,
+      "ties": 0,
+      "losses": 7,
+      "fpts_decimal": 94,
+      "fpts_against_decimal": 8,
+      "fpts_against": 1319,
+      "fpts": 1286
+    },
+    "roster_id": 9,
+    "players": [
+      "1339",
+      "1426",
+      "167",
+      "1992",
+      "3202",
+      "3664",
+      "4137",
+      "4227",
+      "5122",
+      "6151",
+      "6790",
+      "6794",
+      "6798",
+      "CLE",
+      "IND"
+    ],
+    "owner_id": "77361676378587136",
+    "metadata": {
+      "record": "LWLWWLLLWLLWWW"
+    },
+    "league_id": "521050726446252032",
+    "co_owners": null
+  },
+  {
+    "starters": [
+      "4046",
+      "4988",
+      "4098",
+      "2216",
+      "5859",
+      "2505",
+      "5872",
+      "7062",
+      "PIT"
+    ],
+    "settings": {
+      "wins": 4,
+      "total_moves": 9,
+      "ties": 0,
+      "losses": 10,
+      "fpts_decimal": 14,
+      "fpts_against_decimal": 50,
+      "fpts_against": 1456,
+      "fpts": 1273
+    },
+    "roster_id": 10,
+    "players": [
+      "1144",
+      "1793",
+      "2216",
+      "2391",
+      "2505",
+      "4046",
+      "4098",
+      "4988",
+      "5284",
+      "5859",
+      "5872",
+      "6039",
+      "6803",
+      "7062",
+      "PIT"
+    ],
+    "owner_id": "429243125446230016",
+    "metadata": {
+      "record": "LLWLLLLLLWLLWW"
+    },
+    "league_id": "521050726446252032",
+    "co_owners": null
+  },
+  {
+    "starters": [
+      "5849",
+      "184",
+      "6938",
+      "4039",
+      "1067",
+      "5857",
+      "6786",
+      "4666",
+      "CAR"
+    ],
+    "settings": {
+      "wins": 9,
+      "total_moves": 12,
+      "ties": 0,
+      "losses": 5,
+      "fpts_decimal": 52,
+      "fpts_against_decimal": 20,
+      "fpts_against": 1370,
+      "fpts": 1450
+    },
+    "roster_id": 11,
+    "players": [
+      "1067",
+      "184",
+      "4037",
+      "4039",
+      "4131",
+      "4144",
+      "4351",
+      "4666",
+      "5849",
+      "5850",
+      "5857",
+      "6786",
+      "6938",
+      "CAR",
+      "LAR"
+    ],
+    "owner_id": "337222928615612416",
+    "metadata": {
+      "record": "LWWWWWLWWWLWLL"
+    },
+    "league_id": "521050726446252032",
+    "co_owners": null
+  },
+  {
+    "starters": [
+      "1049",
+      "4273",
+      "4035",
+      "4036",
+      "0",
+      "4435",
+      "1825",
+      "3678",
+      "MIN"
+    ],
+    "settings": {
+      "wins": 4,
+      "total_moves": 17,
+      "ties": 0,
+      "losses": 10,
+      "fpts_decimal": 44,
+      "fpts_against_decimal": 24,
+      "fpts_against": 1308,
+      "fpts": 1144
+    },
+    "roster_id": 12,
+    "players": [
+      "1049",
+      "1825",
+      "2118",
+      "2331",
+      "2588",
+      "3163",
+      "3423",
+      "3678",
+      "4035",
+      "4036",
+      "4273",
+      "4435",
+      "5052",
+      "947",
+      "MIN"
+    ],
+    "owner_id": "438629899490553856",
+    "metadata": {
+      "record": "WWWLLLLLLLLWLL"
+    },
+    "league_id": "521050726446252032",
+    "co_owners": null
+  }
+]
