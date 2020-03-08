@@ -36,8 +36,8 @@ The Chumbo uses standard scoring with the following caveats:
 -1 for missed FG < 30 yards
 
 ### Up for consideration
-K: +0.1 per FG yard over 30. (e.g. 49 yard field goal nets 4.9 points)
-DST: No 'points allowed' brackets, -0.1 per point allowed, 0.5 per TFL, 0.5 per PBU, 1 per FF
+- K: +0.1 per FG yard over 30. (e.g. 49 yard field goal nets 4.9 points)
+- DST: No 'points allowed' brackets, -0.1 per point allowed, 0.5 per TFL, 0.5 per PBU, 1 per FF
 
 ## Transaction locks
 When your team has been mathematically eliminated from Chumbo Bowl, Scumbo Bowl, or Consolation Bowl contention, your roster is locked and you are unable to add/drop and make trades. You may only trade with teams who are eligible for the same bowl you are. i.e., A team eliminated from Chumbo Bowl contention cannot trade with a team who is still eligible.
