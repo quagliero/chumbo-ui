@@ -32,8 +32,8 @@ Waivers are done using a FAAB system and run daily on Wednesdays, Thursdays, and
 
 ## Scoring
 The Chumbo uses standard scoring with the following caveats:
--1 for missed XP
--1 for missed FG < 30 yards
+- -1 for missed XP
+- -1 for missed FG < 30 yards
 
 ### Up for consideration
 - K: +0.1 per FG yard over 30. (e.g. 49 yard field goal nets 4.9 points)
