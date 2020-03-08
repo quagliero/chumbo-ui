@@ -2,11 +2,11 @@
 A place for all things Chumbo that get asked, answered, and then usually forgotten.
 
 ## Tiers
-The Chumbo runs an ongoing 'tiering' process which is used to organise the [#divisions selection](divisions) for the following season. The 12 teams in the league are ordered best to worst by their win percentage over the previous 3 seasons, and then broken into 3 groups of 4 (Tier 1, 2 and 3). If win percentages are the same, the tie is broken by points scored. 
+The Chumbo runs an ongoing 'tiering' process which is used to organise the [division selection](#division-selection) for the following season. The 12 teams in the league are ordered best to worst by their win percentage over the previous 3 seasons, and then broken into 3 groups of 4 (Tier 1, 2 and 3). If win percentages are the same, the tie is broken by points scored. 
 
 You need one full year in the league to qualify for the Tiers (during your inaugural season you will be locked into Tier 3).
 
-The [#scumbo](scumbo) automatically gets placed in Tier 3, this shift down results in every other team moving up 1 spot.
+The [scumbo](#scumbo) automatically gets placed in Tier 3, this shift down results in every other team moving up 1 spot.
 
 ## Division selection
 There are 4 divisions in the league and they each contain 3 teams. Each division is made up of one team from each of the tiers. Divisions are chosen in a snake-style draft order by the teams in Tier 1. There are no restrictions on whether you pick a team from Tier 2 or Tier 3 first, but you have to have one from each.
