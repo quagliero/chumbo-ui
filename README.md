@@ -1,44 +1,71 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Chumbo wiki
+A place for all things Chumbo that get asked, answered, and then usually forgotten.
 
-## Available Scripts
+## Tiers
+The Chumbo runs an ongoing 'tiering' process which is used to organise the [#divisions selection](divisions) for the following season. The 12 teams in the league are ordered best to worst by their win percentage over the previous 3 seasons, and then broken into 3 groups of 4 (Tier 1, 2 and 3). If win percentages are the same, the tie is broken by points scored. 
 
-In the project directory, you can run:
+You need one full year in the league to qualify for the Tiers (during your inaugural season you will be locked into Tier 3).
 
-### `yarn start`
+The [#scumbo](scumbo) automatically gets placed in Tier 3, this shift down results in every other team moving up 1 spot.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Division selection
+There are 4 divisions in the league and they each contain 3 teams. Each division is made up of one team from each of the tiers. Divisions are chosen in a snake-style draft order by the teams in Tier 1. There are no restrictions on whether you pick a team from Tier 2 or Tier 3 first, but you have to have one from each.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+1. Tier 1.1
+2. Tier 1.2
+3. Tier 1.3
+4. Tier 1.4
+5. Tier 1.4
+6. Tier 1.3
+7. Tier 1.2
+8. Tier 1.1
 
-### `yarn test`
+The division draft traditionally happens over a few days in March/April.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Draft slot selections
+The winner of the Consolation playoffs from the previous season holds the first draft slot selection, and the Scumbo is given the last. Selections 2 through 11 are done via a hat-pick lottery matching teams to draft slots during the NFL Draft. For ceremonial reasons, the order the remaining teams are drawn is done by the final standings of the previous season.
 
-### `yarn build`
+Note that these are draft slot _selection_ orders, and not the actual pick position. Once assigned your selection number, the official draft pick position takes place with each team taking it in turn (via their given draft slot selection) to choose from the available draft pick slots.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Waivers
+Waivers are done using a FAAB system and run daily on Wednesdays, Thursdays, and Fridays at 1pm and Saturdays at 7pm. On Sundays and Mondays there are no waivers and all available players are Free Agents (in case last minute injuries or news force lineup changes).
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Scoring
+The Chumbo uses standard scoring with the following caveats:
+-1 for missed XP
+-1 for missed FG < 30 yards
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Up for consideration
+K: +0.1 per FG yard over 30. (e.g. 49 yard field goal nets 4.9 points)
+DST: No 'points allowed' brackets, -0.1 per point allowed, 0.5 per TFL, 0.5 per PBU, 1 per FF
 
-### `yarn eject`
+## Transaction locks
+When your team has been mathematically eliminated from Chumbo Bowl, Scumbo Bowl, or Consolation Bowl contention, your roster is locked and you are unable to add/drop and make trades. You may only trade with teams who are eligible for the same bowl you are. i.e., A team eliminated from Chumbo Bowl contention cannot trade with a team who is still eligible.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Playoffs and tiebreakers
+There are 6 playoff teams: All 4 division winners and 2 wildcards.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Division tie breakers are done via:
+1. H2H
+2. Division Record
+3. Points For
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+If all 3 teams are tied, the following tie breaker order is used to eliminate one team:
+1. Division Record
+2. Points For
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The wildcards are the 2 remaining teams with the best records. Tie breaking for wildcard teams is done solely on points scored.
 
-## Learn More
+Division winners are seeded 1 through 4, with the 2 wildcard teams taking 5 and 6.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The top 2 seeds earn the bye in week 14. Seeding is done via brackets (TBC from Sleeper).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Consolation playoffs
+The consolation playoff bracket competes for the right to own the first choice of draft slot selection in the following season. The 2 teams with the best records earn the bye in week 14. The losers of the 2 matches in Week 14 between seeds 9,10,11 and 12 will face off in Week 16 in the Scumbo Bowl.
+
+## Scumbo
+The loser of the consolation playoff bracket. Can only come from the bottom 4 seeds.
+
+The Scumbo is the epitomy of bad, and as such, they are punished by:
+- Being placed in Tier 3 for the end of that season
+- Given the last choice of draft slot for the following season
