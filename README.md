@@ -6,19 +6,21 @@ The Chumbo runs an ongoing 'tiering' process which is used to organise the [divi
 
 You need one full year in the league to qualify for the Tiers (during your inaugural season you will be locked into Tier 3).
 
+The Chumbo winner automatically gets placed in Tier 1 (at position 4 if they were not a Tier 1 team).
+
 The [scumbo](#scumbo) automatically gets placed in Tier 3, this shift down results in every other team moving up 1 spot.
 
 ## Division selection
-There are 4 divisions in the league and they each contain 3 teams. Each division is made up of one team from each of the tiers. Divisions are chosen in a snake-style draft order by the teams in Tier 1. There are no restrictions on whether you pick a team from Tier 2 or Tier 3 first, but you have to have one from each.
+There are 4 divisions in the league and they each contain 3 teams. Each division is made up of one team from each of the tiers. Divisions are chosen in a standard draft order by the teams in Tier 1. There are no restrictions on whether you pick a team from Tier 2 or Tier 3 first, but you have to have one from each.
 
 1. Tier 1.1
 2. Tier 1.2
 3. Tier 1.3
 4. Tier 1.4
-5. Tier 1.4
-6. Tier 1.3
-7. Tier 1.2
-8. Tier 1.1
+5. Tier 1.1
+6. Tier 1.2
+7. Tier 1.3
+8. Tier 1.4
 
 The division draft traditionally happens over a few days in March/April.
 
@@ -27,8 +29,20 @@ The winner of the Consolation playoffs from the previous season holds the first 
 
 Note that these are draft slot _selection_ orders, and not the actual pick position. Once assigned your selection number, the official draft pick position takes place with each team taking it in turn (via their given draft slot selection) to choose from the available draft pick slots.
 
+These draft slots can be traded.
+
+## Draft picks
+These can be traded, along with FAAB, for the current year only.
+
+## Draft Night
+The draft is the biggest night of the year and we do a live in-person event in which attendance is mandatory for all those within the country, and those outside the country take part via video call and the sleeper draft app.
+
+There is no hard time-limit on picks, we instead rely on heckling and peer pressure.
+
 ## Waivers
-Waivers are done using a FAAB system and run daily on Wednesdays, Thursdays, and Fridays at 1pm and Saturdays at 7pm. On Sundays and Mondays there are no waivers and all available players are Free Agents (in case last minute injuries or news force lineup changes).
+Waivers are done using a FAAB system (50) and run daily on Wednesdays, Thursdays, and Fridays at 1pm and Saturdays at 7pm. On Sundays and Mondays there are no waivers and all available players are Free Agents (in case last minute injuries or news force lineup changes).
+
+FAAB can be traded, and included in trades for draft picks and draft slots.
 
 ## Scoring
 The Chumbo uses standard scoring with the following caveats:
@@ -61,7 +75,7 @@ Division winners are seeded 1 through 4, with the 2 wildcard teams taking 5 and 
 The top 2 seeds earn the bye in week 14. Seeding is done via brackets (TBC from Sleeper).
 
 ## Consolation playoffs
-The consolation playoff bracket competes for the right to own the first choice of draft slot selection in the following season. The 2 teams with the best records earn the bye in week 14. The losers of the 2 matches in Week 14 between seeds 9,10,11 and 12 will face off in Week 16 in the Scumbo Bowl.
+The consolation playoff bracket competes for the right to own the first choice of draft slot selection in the following season. The 2 teams with the best records (seed 7 and 8) earn the bye in week 14. The losers of the 2 matches in Week 14 between seeds 9,10,11 and 12 will face off in Week 16 in the Scumbo Bowl.
 
 ## Scumbo
 The loser of the consolation playoff bracket. Can only come from the bottom 4 seeds.
