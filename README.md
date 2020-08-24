@@ -74,6 +74,7 @@ We have removed the scoring 'buckets' where you'd get 7 for conceding 0-6, 4 for
 - -0.1 per point conceded (e.g., 31 points against = -3.1)
 - +0.5 per TFL
 - +1 per FF
+- +1 per FR
 
 This scoring ends up being very similar to 'default' over the course of a season, but means DSTs start on 0 (like any other player), and are rewarded for more skill based metrics (TFLs and FFs).
 
