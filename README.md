@@ -76,7 +76,7 @@ We have removed the scoring 'buckets' where you'd get 7 for conceding 0-6, 4 for
 - +1 per FF
 - +1 per FR
 
-This scoring ends up being very similar to 'default' over the course of a season, but means DSTs start on 0 (like any other player), and are rewarded for more skill based metrics (TFLs and FFs).
+This scoring ends up being very similar to 'default' over the course of a season, but means DSTs start on 0 (like any other player), and are rewarded for more skill based metrics (TFLs and FFs). Full scoring settings can be seen [on sleeper](https://sleeper.app/leagues/521050726446252032).
 
 ## Transaction locks
 When your team has been mathematically eliminated from Chumbo Bowl, Scumbo Bowl, or Consolation Bowl contention, your roster is locked and you are unable to add/drop and make trades. You may only trade with teams who are eligible for the same bowl you are. i.e., A team eliminated from Chumbo Bowl contention cannot trade with a team who is still eligible.
