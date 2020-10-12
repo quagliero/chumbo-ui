@@ -56,7 +56,7 @@ The draft is the biggest night of the year and we do a live in-person event in w
 There is no hard time-limit on picks, we instead rely on heckling and peer pressure.
 
 ## Waivers
-Waivers are done using a FAAB system (100) and run daily on Wednesdays, Thursdays, and Fridays at 1pm and Saturdays at 7pm. On Sundays and Mondays there are no waivers and all available players are Free Agents (in case last minute injuries or news force lineup changes).
+Waivers are done using a FAAB system ($100) and run daily on Wednesday to Sunday at 12:05am (PST, so 7:05 or 8:05am UK depending on Dayligh Savings). All players are locked on Tuesdays. On Sundays, Mondays and Thursdays after the waivers run, all available players are Free Agents (in case last minute injuries or news force lineup changes).
 
 FAAB can be traded, and included in trades for draft picks and draft slots.
 
