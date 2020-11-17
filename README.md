@@ -92,10 +92,14 @@ Division tie breakers are done via:
 If all 3 teams are tied, the following tie breaker order is used to eliminate one team:
 1. Division Record
 2. Points For
+3. Points Against
 
-The wildcards are the 2 remaining teams with the best records. Tie breaking for wildcard teams is done solely on points scored.
+Division winners are seeded 1 through 4. Ordering for these seeds is done via:
+1. Points scored
+2. Points against (higher number wins), if this is somehow also a tie we are living in a simulation and go to
+3. H2H, if _that_ was also a tie then we toss a coin with Commish calling it in the air.
 
-Division winners are seeded 1 through 4, with the 2 wildcard teams taking 5 and 6.
+The wildcards, seeds 5 and 6, are the 2 remaining teams with the best records. Tie breaking and ordering for wildcard teams is done via the same method as ordering division winners.
 
 The top 2 seeds earn the bye in week 14.
 
@@ -110,3 +114,6 @@ The loser of the consolation playoff bracket. Can only come from the bottom 4 se
 The Scumbo is the epitomy of bad, and as such, they are punished by:
 - Being placed in Tier 3 for the end of that season
 - Given the last choice of draft slot for the following season
+
+### Clauses
+- Commissioner HD is the decision owner and ultimate arbiter of any disputes; this is a benevolent dictatorship.
