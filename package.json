@@ -2,6 +2,13 @@
   "name": "chumbo",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "scrape": "babel index.js | node"
+  },
   "dependencies": {
     "@types/jest": "24.0.23",
     "@types/node": "12.12.14",
@@ -10,13 +17,31 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.2.0",
-    "typescript": "3.7.2"
+    "typescript": "3.7.2",
+    "axios": "^0.18.0",
+    "cfonts": "^2.2.1",
+    "chalk": "^2.4.2",
+    "cheerio": "^1.0.0-rc.2",
+    "cli-table": "^0.3.1",
+    "p-queue": "^3.0.0",
+    "ramda": "^0.25.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "tty-table": "^2.6.9"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.4.8",
+    "@storybook/addon-links": "^3.4.8",
+    "@storybook/addons": "^3.4.8",
+    "@storybook/react": "^3.4.8",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-runtime": "^6.26.0",
+    "ora": "^3.0.0",
+    "pretty-print": "^2.0.0",
+    "shelljs": "^0.8.2"
   },
   "eslintConfig": {
     "extends": "react-app"
