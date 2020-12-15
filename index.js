@@ -1,12 +1,13 @@
-import rp from 'request-promise';
-import pQueue from 'p-queue';
-import cheerio from 'cheerio';
-import ora from 'ora';
-import chalk from 'chalk';
-import * as r from 'ramda';
-import Table from 'tty-table';
-import cfonts from 'cfonts';
-import fs from 'fs';
+const rp = require('request-promise');
+const pQueue = require('p-queue');
+const cheerio = require('cheerio');
+const ora = require('ora');
+const chalk = require('chalk');
+const r = require('ramda');
+const Table = require('tty-table');
+const cfonts = require('cfonts');
+const fs = require('fs');
+
 const spinner = ora();
 
 // spinner.start('Parsing Chumbolone Data');
@@ -23,7 +24,7 @@ const managers = [
     userId: ['2820383'],
     teamId: '1',
     sleeper: {
-      id: 77140390129844224,
+      id: '77140390129844224',
     },
   },
   {
@@ -34,7 +35,7 @@ const managers = [
     userId: ['2833865'],
     teamId: '2',
     sleeper: {
-      id: 428943291145265152,
+      id: '428943291145265152',
     },
   },
   {
@@ -45,7 +46,7 @@ const managers = [
     userId: ['2839340'],
     teamId: '3',
     sleeper: {
-      id: 337210029620883456,
+      id: '337210029620883456',
     },
   },
   {
@@ -56,7 +57,7 @@ const managers = [
     userId: ['2873481'],
     teamId: '4',
     sleeper: {
-      id: 438629899490553856,
+      id: '438629899490553856',
     },
   },
   {
@@ -67,7 +68,7 @@ const managers = [
     userId: ['2886224', '6557238', '14118531'],
     teamId: '5',
     sleeper: {
-      id: 337221174670938112,
+      id: '337221174670938112',
     },
   },
   {
@@ -78,7 +79,7 @@ const managers = [
     userId: ['2899570'],
     teamId: '6',
     sleeper: {
-      id: 337297176361201664,
+      id: '337297176361201664',
     },
   },
   {
@@ -90,6 +91,9 @@ const managers = [
     teamId: {
       2012: '7',
     },
+    sleeper: {
+      id: 'chumbolegacy_jimmie',
+    }
   },
   {
     id: 'kitch',
@@ -98,7 +102,7 @@ const managers = [
     userId: ['1245126'],
     teamId: '8',
     sleeper: {
-      id: 77361676378587136,
+      id: '77361676378587136',
     },
   },
   {
@@ -110,6 +114,9 @@ const managers = [
     teamId: {
       2012: '9',
     },
+    sleeper: {
+      id: 'chumbolegacy_karsten',
+    }
   },
   {
     id: 'rich',
@@ -118,7 +125,7 @@ const managers = [
     userId: ['3832177'],
     teamId: '10',
     sleeper: {
-      id: 337222928615612416,
+      id: '337222928615612416',
     },
   },
   {
@@ -132,6 +139,9 @@ const managers = [
       2014: '7',
       2015: '7',
     },
+    sleeper: {
+      id: 'chumbolegacy_brock',
+    }
   },
   {
     id: 'htc',
@@ -140,7 +150,7 @@ const managers = [
     teamName: '21st & Hine',
     teamId: '9',
     sleeper: {
-      id: 337226046606704640,
+      id: '337226046606704640',
     },
   },
   {
@@ -156,10 +166,10 @@ const managers = [
     },
     weeks: {
       2015: [1,2,3,4,5,6,7,8],
-      2020: [1,2,3,4,5,6,7,9,10,11,12,13],
+      2020: [1,2,3,4,5,6,7,9,10,11,12,13,14,15,16],
     },
     sleeper: {
-      id: 411186928751230976,
+      id: '411186928751230976',
     },
   },
   {
@@ -179,6 +189,9 @@ const managers = [
     weeks: {
       2020: [8],
     },
+    sleeper: {
+      id: 'chumbolegacy_sudio',
+    }
   },
   {
     id: 'phil',
@@ -191,9 +204,12 @@ const managers = [
       2016: 11,
     },
     weeks: {
-      2015: [9,10,11,12,13],
+      2015: [9,10,11,12,13,14,15,16],
       2016: [1,2,3,4,5,6,7,8,9],
     },
+    sleeper: {
+      id: 'chumbolegacy_phil',
+    }
   },
   {
     id: 'nick',
@@ -205,10 +221,10 @@ const managers = [
       2016: '11',
     },
     weeks: {
-      2016: [10,11,12,13],
+      2016: [10,11,12,13,14,15,16],
     },
     sleeper: {
-      id: 429243125446230016,
+      id: '429243125446230016',
     },
   },
   {
@@ -221,7 +237,7 @@ const managers = [
       current: 12,
     },
     sleeper: {
-      id: 359110473351696384,
+      id: '359110473351696384',
     },
   }
 ];
@@ -276,6 +292,25 @@ const getManager = (year, week, teamId) => r.find((manager) => {
   return false;
 }, managers);
 
+const getTeamId = (manager, year, week) => {
+  const weekMatch = manager?.weeks?.[year]?.indexOf(week);
+  if (weekMatch) {
+    return manager.teamId[year];
+  }
+
+  const yearMatch = manager.teamId[year];
+  if (yearMatch) {
+    return yearMatch;
+  }
+
+  const current = manager.teamId.current;
+
+  if (current) {
+    return current;
+  }
+
+  return manager.teamId;
+}
 
 const parseWeek = (year, week, teams = {}) => new Promise((resolve) => {
   rp(`${urlBase}/${year}/schedule?scheduleDetail=${week}`).then((html) => {
@@ -283,7 +318,8 @@ const parseWeek = (year, week, teams = {}) => new Promise((resolve) => {
     const $ = cheerio.load(html);
     const $matchups = $('.scheduleContent .matchups > ul > li');
     const matchups = [];
-
+    const sleeper = [];
+    let count = 0;
     $matchups.each((i, el) => {
       const $matchup = $(el);
       const $team1 = $matchup.find($('.teamWrap-1 .teamTotal'));
@@ -296,7 +332,7 @@ const parseWeek = (year, week, teams = {}) => new Promise((resolve) => {
         teams[manager1.id] && teams[manager2.id] &&
         teams[manager1.id].division === teams[manager2.id].division
       ) ? true : false;
-      
+
       matchups.push([
         [
           manager1.id,
@@ -312,6 +348,43 @@ const parseWeek = (year, week, teams = {}) => new Promise((resolve) => {
           divisional,
         }
       ]);
+
+      const points = {
+        [manager1.id]: Number($team1.text()),
+        [manager2.id]: Number($team2.text()),
+      };
+
+      if (true) {
+        [ manager1, manager2 ].forEach((m) => {
+          const teamId = getTeamId(m, year, week);
+          parseTeamRoster(teamId, year, week).then((data) => {
+            count++;
+            sleeper.push({
+              matchup_id: i + 1,
+              roster_id: m.sleeper.id,
+              points: points[m.id],
+              starters: data.reduce((acc, cur) => {
+                if (cur.starter) {
+                  acc.push(cur);
+                }
+                return acc;
+              }, []),
+              players: data.reduce((acc, cur) => {
+                acc.push(cur);
+                return acc;
+              }, []),
+            });
+            // got them all
+            if (count === matchups.length * 2) {
+              console.log(sleeper);
+              fs.writeFile(`./data/${year}/matchups/${week}.json`, JSON.stringify(sleeper), 'utf-8', (err) => {
+                if (err) throw err;
+                console.log('Data written to file');
+              });
+            }
+          });
+        })
+      }
     });
 
     resolve(matchups);
@@ -421,7 +494,6 @@ const parseRegularSeasonStandings = (year) => new Promise((resolve) => {
         let wins, losses, ties;
 
         if (year === 2020) {
-          console.log(manager.id, hack2020[manager.id]);
           wins = hack2020[manager.id].wins;
           losses = hack2020[manager.id].losses;
           ties = 0;
@@ -459,13 +531,14 @@ const parseTeamRoster = (team, year, week) => new Promise((resolve) => {
       if (el.attribs.class.indexOf('odd') > -1 || el.attribs.class.indexOf('even') > -1) {
         // filter out bench, we only want starts
         // `player-20- seems to be used only on bench spots
-        if (el.attribs.class.indexOf('player-20-') === -1) {
+        // if (el.attribs.class.indexOf('player-20-') === -1) {
           const $player = $(el);
           rosterData.push({
             name: $player.find('.playerNameFull').text(),
             position: $player.find('.playerNameAndInfo > div > em').text().split(' - ')[0],
+            starter: el.attribs.class.indexOf('player-20-') === -1
           });
-        }
+        // }
       }
     });
     resolve(rosterData);
@@ -941,4 +1014,6 @@ const getHeadToHead = (a, b) => Promise.all(r.filter(r.identity, r.flatten(allWe
 // getWeekRecord(13);
 // scrape(years, 'All-Time Records');
 // scrape(r.slice(-3, Infinity, years), 'Tiers', true);
-scrape([2012]);
+// scrape([2012]);
+
+parseWeek(2012, 16);
