@@ -25,6 +25,7 @@ const managers = [
     teamId: '1',
     sleeper: {
       id: '77140390129844224',
+      display_name: 'thd',
     },
   },
   {
@@ -36,6 +37,7 @@ const managers = [
     teamId: '2',
     sleeper: {
       id: '428943291145265152',
+      displayname: 'jmshelley',
     },
   },
   {
@@ -47,6 +49,7 @@ const managers = [
     teamId: '3',
     sleeper: {
       id: '337210029620883456',
+      display_name: 'BushJohnson',
     },
   },
   {
@@ -58,6 +61,7 @@ const managers = [
     teamId: '4',
     sleeper: {
       id: '438629899490553856',
+      display_name: 'TheDollar',
     },
   },
   {
@@ -69,6 +73,7 @@ const managers = [
     teamId: '5',
     sleeper: {
       id: '337221174670938112',
+      display_name: 'Si2on',
     },
   },
   {
@@ -80,6 +85,7 @@ const managers = [
     teamId: '6',
     sleeper: {
       id: '337297176361201664',
+      display_name: 'anthonyxyz',
     },
   },
   {
@@ -93,6 +99,7 @@ const managers = [
     },
     sleeper: {
       id: 'chumbolegacy_jimmie',
+      display_name: 'Jimmie',
     }
   },
   {
@@ -103,6 +110,7 @@ const managers = [
     teamId: '8',
     sleeper: {
       id: '77361676378587136',
+      display_name: 'DJKJnr'
     },
   },
   {
@@ -116,6 +124,7 @@ const managers = [
     },
     sleeper: {
       id: 'chumbolegacy_karsten',
+      display_name: 'Karsten',
     }
   },
   {
@@ -126,6 +135,7 @@ const managers = [
     teamId: '10',
     sleeper: {
       id: '337222928615612416',
+      display_name: 'rich45',
     },
   },
   {
@@ -140,7 +150,8 @@ const managers = [
       2015: '7',
     },
     sleeper: {
-      id: 'chumbolegacy_brock',
+      id: 'chumbolegacy_euan',
+      display_name: 'Euan',
     }
   },
   {
@@ -151,6 +162,7 @@ const managers = [
     teamId: '9',
     sleeper: {
       id: '337226046606704640',
+      display_name: 'davidino56',
     },
   },
   {
@@ -170,6 +182,7 @@ const managers = [
     },
     sleeper: {
       id: '411186928751230976',
+      display_name: 'manzielsunicorn'
     },
   },
   {
@@ -191,6 +204,7 @@ const managers = [
     },
     sleeper: {
       id: 'chumbolegacy_sudio',
+      display_name: 'Chris'
     }
   },
   {
@@ -209,6 +223,7 @@ const managers = [
     },
     sleeper: {
       id: 'chumbolegacy_phil',
+      display_name: 'Phil',
     }
   },
   {
@@ -225,6 +240,7 @@ const managers = [
     },
     sleeper: {
       id: '429243125446230016',
+      display_name: 'DontPanic22'
     },
   },
   {
@@ -238,14 +254,10 @@ const managers = [
     },
     sleeper: {
       id: '359110473351696384',
+      display_name: 'ryanlees',
     },
   }
 ];
-
-// fs.writeFile('managers.json', JSON.stringify(managers), (err) => {
-//   if (err) return console.log(err);
-//   console.log('managers > managers.json');
-// });
 
 const formatNumber = (num) => Math.round(num * 1e2) / 1e2;
 
@@ -354,37 +366,34 @@ const parseWeek = (year, week, teams = {}) => new Promise((resolve) => {
         [manager2.id]: Number($team2.text()),
       };
 
-      if (true) {
-        [ manager1, manager2 ].forEach((m) => {
-          const teamId = getTeamId(m, year, week);
-          parseTeamRoster(teamId, year, week).then((data) => {
-            count++;
-            sleeper.push({
-              matchup_id: i + 1,
-              roster_id: m.sleeper.id,
-              points: points[m.id],
-              starters: data.reduce((acc, cur) => {
-                if (cur.starter) {
-                  acc.push(cur);
-                }
-                return acc;
-              }, []),
-              players: data.reduce((acc, cur) => {
+      [ manager1, manager2 ].forEach((m) => {
+        const teamId = getTeamId(m, year, week);
+        parseTeamRoster(teamId, year, week).then((data) => {
+          count++;
+          sleeper.push({
+            matchup_id: i + 1,
+            roster_id: m.sleeper.id,
+            points: points[m.id],
+            starters: data.reduce((acc, cur) => {
+              if (cur.starter) {
                 acc.push(cur);
-                return acc;
-              }, []),
-            });
-            // got them all
-            if (count === matchups.length * 2) {
-              console.log(sleeper);
-              fs.writeFile(`./data/${year}/matchups/${week}.json`, JSON.stringify(sleeper), 'utf-8', (err) => {
-                if (err) throw err;
-                console.log('Data written to file');
-              });
-            }
+              }
+              return acc;
+            }, []),
+            players: data.reduce((acc, cur) => {
+              acc.push(cur);
+              return acc;
+            }, []),
           });
-        })
-      }
+          // got them all
+          if (count === matchups.length * 2) {
+            fs.writeFile(`./raw_data/${year}/matchups/${week}.json`, JSON.stringify(sleeper, null, 2), 'utf-8', (err) => {
+              if (err) throw err;
+            });
+            console.log(`${year} week ${week} matchups written to ./raw_data/${year}/matchups/${week}.json`);
+          }
+        });
+      })
     });
 
     resolve(matchups);
@@ -1016,4 +1025,193 @@ const getHeadToHead = (a, b) => Promise.all(r.filter(r.identity, r.flatten(allWe
 // scrape(r.slice(-3, Infinity, years), 'Tiers', true);
 // scrape([2012]);
 
-parseWeek(2012, 16);
+// parseWeek(2012, 16);
+
+
+const parsePicks = (year) => new Promise((resolve) => {
+  rp(`${urlBase}/${year}/draftresults?draftResultsDetail=0&draftResultsTab=round&draftResultsType=results`).then((html) => {
+    const $ = cheerio.load(html);
+
+    const $rounds = $('#leagueDraftResultsResults .results .wrap > ul');
+    const picks = [];
+    let roundCount = 0;
+
+    $rounds.each((i, round) => {
+      roundCount++;
+      const $round = $(round);
+      const $picks = $round.find('> li');
+
+      $picks.each((k, pick) => {
+        const $pick = $(pick);
+        const pick_no = parseInt($pick.find('.count').text());
+        const name = $pick.find('.playerNameFull').text();
+        const position = $pick.find('.playerCard + em').text().split(' -')[0];
+        const manager = getManager(year, 1, $pick.find('.teamName').attr('class').split('teamId-')[1]);
+
+        const draft_slot = (roundCount % 2 === 0) ? $picks.length - k : k + 1;
+        picks.push({
+          name,
+          position,
+          round: i + 1,
+          pick_no,
+          picked_by: manager.sleeper.id,
+          draft_slot,
+        });
+      });
+    });
+
+    fs.writeFileSync(`./raw_data/${year}/picks.json`, JSON.stringify(picks, null, 2), 'utf-8', (err) => {
+      if (err) throw err;
+    });
+    console.log(`${year} draft picks written to ./raw_data/${year}/picks.json`);
+
+    resolve();
+  });
+});
+
+// parsePicks(2012);
+
+
+// Users
+
+const parseUsers = (year) => new Promise((resolve) => {
+  rp(`${urlBase}/${year}/owners`).then((html) => {
+    const $ = cheerio.load(html);
+    const users = [];
+
+    const $owners = $('#leagueOwners .tableType-team > tbody > tr');
+
+    $owners.each((i, el) => {
+      const $team = $(el).find('.teamImg');
+      const avatar = $team.find('img').attr('src');
+      const team_name = $team.find('img').attr('alt');
+      const manager = getManager(year, 1, $team.attr('class').split('teamId-')[1]);
+      users.push({
+        user_id: manager.sleeper.id,
+        display_name: manager.sleeper.display_name,
+        league_id: `chumbo_${year}`,
+        metadata: {
+          avatar,
+          team_name,
+        }
+      });
+    });
+
+    fs.writeFileSync(`./raw_data/${year}/users.json`, JSON.stringify(users, null, 2), 'utf-8', (err) => {
+      if (err) throw err;
+    })
+    console.log(`${year} users written to ./raw_data/${year}/users.json`);
+  });
+});
+
+// parseUsers(2012);
+
+const parseRosters = (year) => new Promise(() => {
+  const rosters = [];
+  const count = year >= 2014 ? 12 : 10;
+
+  for (let i = 1; i <= count; i ++) {
+    rosters.push(
+      new Promise((resolve) => parseTeamRoster(i, year, 16).then((roster) => {
+        new Promise((resultResolve) => {
+          rp(`${urlBase}/${year}/standings?historyStandingsType=regular`).then((html) => {
+            const $ = cheerio.load(html);
+
+            const $team = $(`#leagueHistoryStandings .tableType-team > tbody > tr.team-${i}`);
+            const record = $team.find('.teamRecord').text().split('-');
+            const points = $team.find('.teamPts').first().text().split('.');
+            const points_against = $team.find('.teamPts.last').text().split('.');
+            const owner_id = getManager(year, 16, i).sleeper.id;
+            const roster_id = i;
+            const wins = Number(record[0]);
+            const losses = Number(record[1]);
+            const ties = Number(record[2]);
+            const fpts = parseFloat(points[0].replace(/,/g, ''));
+            const fpts_decimal = Number(points[1]);
+            const fpts_against = parseFloat(points_against[0].replace(/,/g, ''));
+            const fpts_against_decimal = Number(points_against[1]);
+
+            resultResolve({
+              league_id: `chumbo_${year}`,
+              owner_id,
+              roster_id,
+              settings: {
+                wins,
+                losses,
+                ties,
+                fpts,
+                fpts_decimal,
+                fpts_against,
+                fpts_against_decimal,
+              },
+              players: roster,
+            });
+          });
+        }).then((rosterAndResult) => {
+          new Promise((rosterAndResultResolve) => {
+            rp(`${urlBase}/${year}/owners`).then((html) => {
+              const $ = cheerio.load(html);
+
+              const $team = $(`#leagueOwners .tableType-team > tbody > tr.team-${i}`);
+              const moves = Number($team.find('.teamTransactionCount').text());
+              const trades = Number($team.find('.teamTradeCount').text());
+
+              rosterAndResult.settings.total_moves = moves + trades;
+              rosterAndResultResolve(rosterAndResult);
+            });
+          }).then((rosterAndResultAndMoves) => {
+            new Promise(() => {
+              rp(`${urlBase}/${year}/schedule?standingsTab=schedule&scheduleType=team&scheduleDetail=${i}`).then((html) => {
+                const $ = cheerio.load(html);
+                const $weeks = $('#scheduleSchedule .tableType-weeks > tbody > tr');
+
+                const record = [];
+
+                $weeks.each((i, el) => {
+                  // only count reg season
+                  if ((i + 1) <= (year >= 2014 ? 13 : 14)) {
+                    record.push(
+                      $(el).find('.resultText').text().charAt(0)
+                    );
+                  }
+                });
+                rosterAndResultAndMoves.metadata = {
+                  record: record.join(''),
+                };
+
+                resolve(rosterAndResultAndMoves);
+              });
+            })
+          });
+        })
+      }))
+    )
+  }
+
+  Promise.all(rosters).then((data) => {
+    fs.writeFileSync(`./raw_data/${year}/rosters.json`, JSON.stringify(data, null, 2), 'utf-8', (err) => {
+        if (err) throw err;
+      });
+      console.log(`${year} rosters written to ./raw_data/${year}/rosters.json`);
+  });
+});
+
+// parseRosters(2012);
+
+const buildRawDataForYear = (year) => {
+  const promises = [
+    parseUsers(year),
+    parseRosters(year),
+    parsePicks(year),
+  ];
+
+  for (let i = 1; i <= 16; i++) {
+    promises.push(parseWeek(year, i));
+  }
+
+  Promise.all(promises).then(() => {
+    console.log(`Built raw data for ${year} in ./raw_data/${year}`);
+  })
+}
+
+buildRawDataForYear(2013);

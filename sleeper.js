@@ -3,29 +3,36 @@
  * script writes and turns it into sleeper friendly JSON
  * 
  * TODO:
- *  - "final roster"
  *  - winners bracket
  *  - losers bracket
- *  - draft
  *  - transactions
  */
 
 const league =  require('./data/2012/league.json');
-const users = require('./data/2012/users.json');
-const rosters = require('./data/2012/rosters.json');
 const playerData = require('./data/players.json');
-const winners_bracket = require('./data/2012/winners_bracket.json');
+
 const { writeFileSync } = require('fs');
 
 const playerKeys = Object.keys(playerData);
 
-const getOwnerByRosterId = (rosterId) => rosters.find(x => x.roster_id === rosterId);
+const getOwnerByRosterId = (year, rosterId) => {
+  const rosters = require(`./data/${year}/rosters.json`);
 
-const getUserByOwnerId = (ownerId) => users.find(x => x.user_id === ownerId);
+  return rosters.find(x => x.roster_id === rosterId);
+}
 
-const getUserByRosterId = (rosterId) => getUserByOwnerId(getOwnerByRosterId(rosterId)?.owner_id);
+const getUserByOwnerId = (year, ownerId) => {
+  const users = require(`./data/${year}/users.json`);
 
-const getRosterByOwnerId = (ownerId) => rosters.find(x => x.owner_id === ownerId);
+  return users.find(x => x.user_id === ownerId);
+}
+
+const getUserByRosterId = (year, rosterId) => getUserByOwnerId(getOwnerByRosterId(year, rosterId)?.owner_id);
+
+const getRosterByOwnerId = (year, ownerId) => {
+  const rosters = require(`./data/${year}/rosters.json`);
+  return rosters.find(x => x.owner_id === ownerId);
+}
 
 const getPlayerDetails = (p, pos) => {
   if (playerData[p]) {
@@ -112,43 +119,52 @@ const getPlayerId = (name, position) => {
   return attemptedMatch[0] || name;
 }
 
-const createDecimalNumber = (x, y) => x + (y / 100);
+// USERS
+const createUsersJson = (year) => {
+  const users = require(`./raw_data/${year}/users.json`);
 
-const standings = rosters.map((roster) => {
-  const user = getUserByOwnerId(roster.owner_id);
-  return {
-    team: user.metadata.team_name,
-    manager: user.display_name,
-    wins: roster.settings.wins,
-    losses: roster.settings.losses,
-    ties: roster.settings.ties,
-    fpts: createDecimalNumber(roster.settings.fpts, roster.settings.fpts_against),
-    fpts_against: createDecimalNumber(roster.settings.fpts_against, roster.settings.fpts_against_decimal),
-  }
-}).sort((a, b) => {
-  if (a.wins === b.wins) {
-    return a.fpts > b.fpts ? -1 : 1;
-  }
-  return b.wins - a.wins;
-});
+  writeFileSync(`./data/${year}/users.json`, JSON.stringify(users), 'utf-8', (err) => {
+    if (err) throw err;
+    console.log(`${year} users written to ./data/${year}/users.json`);
+  })
+}
+
+// ROSTERS
+const createRostersJson = (year) => {
+  const roster = require(`./raw_data/${year}/rosters.json`);
+
+  const formattedRoster = roster.map((team) => {
+    const starters = [];
+    const players = [];
+
+    team.players.forEach((p) => {
+      const playerId = getPlayerId(p.name, p.position);
+      if (p.starter) {
+        starters.push(playerId);
+      }
+      players.push(playerId);
+    });
+
+    return Object.assign(team, {
+      players,
+      starters,
+    });
+  });
+
+  writeFileSync(`./data/${year}/rosters.json`, JSON.stringify(formattedRoster), 'utf-8', (err) => {
+    if (err) throw err;
+  });
+  console.log(`${year} rosters written to ./data/${year}/rosters.json`);
+}
 
 
-const roster = rosters[1].players.map((p) => {
-  const player = getPlayerDetails(p);
+// MATCHUPS
+const createMatchupsJson = (year, weeks) => 
+  // Take scraped matchup data and replace player objects with player IDs
+  weeks.forEach((week) => {
+    try {
+      const matchups = require(`./raw_data/${year}/matchups/${week}.json`);
 
-  return {
-    player_id: player.player_id,
-    position: player.position,
-    name: player.full_name || player.team
-  }
-});
-
-if (process.env.build === 'matchups') {
-  [2012].forEach((year) => {
-    // Take scraped matchup data and replace player objects with player IDs
-    [16].forEach((week) => {
-      const matchups = require(`./data/${year}/matchups/${week}.json`);
-      
       const formattedMatchups = matchups.map((matchup) => {
         const starters = [];
         const players = [];
@@ -161,7 +177,7 @@ if (process.env.build === 'matchups') {
         });
         
         return Object.assign(matchup, {
-          roster_id: getRosterByOwnerId(matchup.roster_id)?.roster_id || matchup.roster_id,
+          roster_id: getRosterByOwnerId(year, matchup.roster_id)?.roster_id || matchup.roster_id,
           starters,
           players,
         });
@@ -169,52 +185,104 @@ if (process.env.build === 'matchups') {
   
       writeFileSync(`./data/${year}/matchups/${week}.json`, JSON.stringify(formattedMatchups), 'utf-8', (err) => {
         if (err) throw err;
-        console.info(`${year} week ${week} matchups written to file`);
       });
-  
-      // @TODO get the final week rosters and update the 'rosters.json' with them
-    });
-  
+      console.info(`${year} week ${week} matchups written to ./data/${year}/matchups/${week}.json`);
+
+    } catch (err) {
+      console.error(err);
+    }
   });
-}
 
-// winners_bracket.forEach((m) => {
-//   if (m.t1_from?.w) {
-//     console.log(`${getUserByRosterId(m.t1_from?.w)?.display_name} vs ${getUserByRosterId(m.t2_from?.w)?.display_name}`);
-//   } else if (m.t1_from?.l) {
-//     console.log(`${getUserByRosterId(m.t1_from?.l)?.display_name} vs ${getUserByRosterId(m.t2_from?.l)?.display_name}`);
-//   } else {
-//     console.log(`${getUserByRosterId(m.t1)?.display_name} vs ${getUserByRosterId(m.t2)?.display_name}`);
-//   }
-// })
 
-// rosters.forEach((r) => {
-//   console.log({
-//     display_name: getUserByRosterId(r.roster_id).display_name,
-//     rosterId: r.roster_id,
-//   });
-// });
+// PICKS
+const createPicksJson = (year) => {
+  const picks = require(`./raw_data/${year}/picks.json`);
 
-// [2012].forEach((y) => {
-//   [11].forEach((w) => {
-//     const week = require(`./data/${y}/matchups/${w}.json`);
+  const formattedPicks = picks.map((p) => {
+    const roster = getRosterByOwnerId(year, p.picked_by);
+    const {
+      round,
+      pick_no,
+      picked_by,
+      draft_slot,
+    } = p;
 
-//     const grouped = week.reduce((acc, cur) => {
-//       if (acc[cur.matchup_id]) {
-//         acc[cur.matchup_id].push(cur)
-//       } else {
-//         acc[cur.matchup_id] = [cur];
-//       }
+    return {
+      round,
+      pick_no,
+      picked_by,
+      draft_slot,
+      player_id: getPlayerId(p.name, p.position),
+      roster_id: roster.roster_id,
+    };
+  });
 
-//       return acc;
-//     }, {});
+  writeFileSync(`./data/${year}/picks.json`, JSON.stringify(formattedPicks), 'utf-8', (err) => {
+    if (err) throw err;
+  })
+  console.log(`${year} draft picks written to ./data/${year}/picks.json`);
+};
 
-//     Object.keys(grouped).forEach((key) => {
-//       const matchup = grouped[key];
 
-//       console.log(`
-//         ${getUserByRosterId(matchup[0].roster_id)?.metadata.team_name} vs ${getUserByRosterId(matchup[1].roster_id)?.metadata.team_name}
-//       `);
-//     })
-//   })
-// })
+// createPicksJson(2012);
+
+const createJsonForYear = (year) => {
+  createUsersJson(year);
+  createRostersJson(year);
+  createPicksJson(year);
+  createMatchupsJson([ year ], [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]);
+};
+
+createJsonForYear(2013);
+
+
+
+
+
+
+
+
+
+
+
+
+// LOGGING PLAYGROUND
+
+const logWinnersBracket = (year) => {
+  const winnersBracket = require(`./data/${year}/winners_bracket.json`);
+
+  winnersBracket.forEach((m) => {
+    if (m.t1_from?.w) {
+      console.log(`${getUserByRosterId(m.t1_from?.w)?.display_name} vs ${getUserByRosterId(m.t2_from?.w)?.display_name}`);
+    } else if (m.t1_from?.l) {
+      console.log(`${getUserByRosterId(m.t1_from?.l)?.display_name} vs ${getUserByRosterId(m.t2_from?.l)?.display_name}`);
+    } else {
+      console.log(`${getUserByRosterId(m.t1)?.display_name} vs ${getUserByRosterId(m.t2)?.display_name}`);
+    }
+  })
+};
+  
+const logWeeklyMatchups = (years, weeks) =>
+  years.forEach((y) => {
+    weeks.forEach((w) => {
+      const week = require(`./data/${y}/matchups/${w}.json`);
+  
+      const grouped = week.reduce((acc, cur) => {
+        if (acc[cur.matchup_id]) {
+          acc[cur.matchup_id].push(cur)
+        } else {
+          acc[cur.matchup_id] = [cur];
+        }
+  
+        return acc;
+      }, {});
+  
+      Object.keys(grouped).forEach((key) => {
+        const matchup = grouped[key];
+  
+        console.log(`
+          ${getUserByRosterId(matchup[0].roster_id)?.metadata.team_name} vs ${getUserByRosterId(matchup[1].roster_id)?.metadata.team_name}
+        `);
+      })
+    })
+  });

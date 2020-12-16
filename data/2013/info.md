@@ -1,4 +1,4 @@
-# 2012 inaugural season
+# 2013 second season
 
 10 team league.
 
@@ -14,7 +14,7 @@
 | 438629899490553856 | TheDollar | 4 | |
 | 337221174670938112 | Si2on | 5 | |
 | 337297176361201664 | anthonyxyz | 6 | |
-| chumbolegacy_jimmie | Jimmie | 7 | |
+| chumbolegacy_euan | Euan | 7 | |
 | 77361676378587136 | DJKJnr | 8 | |
-| chumbolegacy_karsten | Karsten | 9 | |
+| 337226046606704640 | davidino56 | 9 |
 | 337222928615612416 | rich45 | 10 | |

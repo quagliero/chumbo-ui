@@ -12,7 +12,7 @@
     "playoff_type": 1
   },
   "season_type": "regular",
-  "season": "2012",
+  "season": "2013",
   "scoring_settings": {
     "blk_kick": 0,
     "def_2pt": 2.0,
@@ -82,10 +82,10 @@
   "name": "The Chumbo",
   "metadata": {
   },
-  "loser_bracket_id": 2012,
-  "league_id": "chumbo_2012",
+  "loser_bracket_id": 2013,
+  "league_id": "chumbo_2013",
   "group_id": null,
-  "draft_id": "chumbo_draft_2012",
+  "draft_id": "chumbo_draft_2013",
   "company_id": null,
-  "bracket_id": 2012
+  "bracket_id": 2013
 }
