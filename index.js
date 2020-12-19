@@ -7,6 +7,7 @@ const r = require('ramda');
 const Table = require('tty-table');
 const cfonts = require('cfonts');
 const fs = require('fs');
+const { settings } = require('cluster');
 
 const spinner = ora();
 
@@ -1198,6 +1199,52 @@ const parseRosters = (year) => new Promise(() => {
 
 // parseRosters(2012);
 
+const parseSettings = (year) => new Promise((resolve) => {
+  rp(`${urlBase}/${year}/settings`).then((html) => {
+    const $ = cheerio.load(html);
+    const $settings = $('.leagueSettings ul.formItems > li');
+    const $roster = $('.leagueSettings ul.positionsAndRoster > li');
+    const $scoring = $('.scoreSettings ul > li');
+    const league = {
+      season: `${year}`,
+      name: `Chumbo ${year}`,
+      settings: {
+      },
+      scoring_settings: {},
+      roster_positions: [],
+    };
+
+    $settings.each((i, el) => {
+      const key = $(el).find('em').text();
+      const value = $(el).find('div').text();
+      league.settings[key] = value;
+    })
+
+    $roster.each((i, el) => {
+      const key = $(el).find('em').text();
+      const value = $(el).find('div').text();
+
+      league.roster_positions.push({ key, value });
+    });
+
+    $scoring.each((i, el) => {
+      const key = $(el).find('em').text();
+      const value = $(el).find('div').text();
+
+      league.scoring_settings[key] = value;
+    });
+
+    fs.writeFileSync(`./raw_data/${year}/league.json`, JSON.stringify(league, null, 2), 'utf-8', (err) => {
+      if (err) throw err;
+    })
+    console.log(`${year} league settings written to ./raw_data/${year}/league.json`)
+    resolve(league);
+    
+  });
+});
+
+parseSettings(2012);
+
 const buildRawDataForYear = (year) => {
   const promises = [
     parseUsers(year),
@@ -1214,4 +1261,4 @@ const buildRawDataForYear = (year) => {
   })
 }
 
-buildRawDataForYear(2013);
+// buildRawDataForYear(2013);
