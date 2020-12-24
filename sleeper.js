@@ -31,7 +31,14 @@ const getUserByRosterId = (year, rosterId) => getUserByOwnerId(getOwnerByRosterI
 
 const getRosterByOwnerId = (year, ownerId) => {
   const rosters = require(`./data/${year}/rosters.json`);
-  return rosters.find(x => x.owner_id === ownerId);
+  let owner = rosters.find(x => x.owner_id === ownerId);
+
+  // check for co_owner
+  if (!owner) {
+    owner = rosters.find(x => x.metadata?.co_owner?.owner_id === ownerId);
+  }
+
+  return owner;
 }
 
 const getPlayerDetails = (p, pos) => {
@@ -43,10 +50,12 @@ const getPlayerDetails = (p, pos) => {
     if (playerData[k].full_name === p && playerData[k].position === pos) {
       return true;
     }
+    console.log(p);
 
     if (playerData[k].full_name === p) {
       return true;
     }
+
 
     return false;
   });
@@ -125,8 +134,8 @@ const createUsersJson = (year) => {
 
   writeFileSync(`./data/${year}/users.json`, JSON.stringify(users), 'utf-8', (err) => {
     if (err) throw err;
-    console.log(`${year} users written to ./data/${year}/users.json`);
   })
+  console.log(`${year} users written to ./data/${year}/users.json`);
 }
 
 // ROSTERS
@@ -178,6 +187,7 @@ const createMatchupsJson = (year, weeks) =>
         
         return Object.assign(matchup, {
           roster_id: getRosterByOwnerId(year, matchup.roster_id)?.roster_id || matchup.roster_id,
+          user_id: matchup.roster_id,
           starters,
           players,
         });
@@ -226,27 +236,295 @@ const createPicksJson = (year) => {
 
 // createPicksJson(2012);
 
+// BRACKETS
+const createBracketsJson = (year, type = 'championship') => {
+  const fileName = type === 'consolation' ? 'losers_bracket' : 'winners_bracket';
+  const bracket = require(`./raw_data/${year}/${fileName}.json`);
+
+  const formattedBracket = bracket.map((b) => {
+    const x = {
+      r: b.round,
+      m: b.matchup,
+      w: getRosterByOwnerId(year, b.winner).roster_id,
+      l: getRosterByOwnerId(year, b.loser).roster_id,
+      t1: getRosterByOwnerId(year, b.team_1).roster_id,
+      t2: getRosterByOwnerId(year, b.team_2).roster_id,
+      p: b.p,
+      t1_from: b.t1_from,
+      t2_from: b.t2_from,
+    }
+
+    return x;
+  });
+
+  writeFileSync(`./data/${year}/${fileName}.json`, JSON.stringify(formattedBracket), 'utf-8', (err) => {
+    if (err) throw err;
+  });
+  console.log(`${year} ${type} bracket written to ./data/${year}/${fileName}.json`);
+}
+
+// createBracketsJson(2013);
+// createBracketsJson(2013, 'consolation');
+
+// LEAGUE
+const createLeagueJson = (year) => {
+  const league = require(`./raw_data/${year}/league.json`);
+  const formattedLeague = {
+    status: 'post_season',
+    sport: 'nfl',
+    season_type: 'regular',
+    season: league.season,
+    name: league.name,
+    draft_id: `chumbo_draft_${year}`,
+    league_id: `chumbo_${year}`,
+    previous_league_id: year > 2012 ? `chumbo_${year - 1}` : null,
+    bracket_id: `chumbo_winners_bracket_${year}`,
+    loser_bracket_id: `chumbo_losers_bracket_${year}`,
+    settings: {
+      playoff_type: 1,
+      daily_waivers: 0,
+      playoff_seed_type: 0,
+      start_week: 1,
+    },
+  };
+
+  Object.entries(league.settings).forEach(([ key, val ]) => {
+    if (key === 'Divisions') {
+      formattedLeague.settings.divisions = parseInt(val) || 0;
+    } else if (key === 'Playoffs') {
+      formattedLeague.settings.playoff_teams = parseInt(val.split('- ')[1]);
+    } else if (key === 'Teams') {
+      formattedLeague.total_rosters = Number(val);
+      formattedLeague.settings.num_teams = Number(val);
+    }
+  });
+  
+  const positionMap = {
+    'Quarterback:': 'QB',
+    'Running Back:': 'RB',
+    'Wide Receiver:': 'WR',
+    'Tight End:': 'TE',
+    'Wide Receiver / Running Back:': 'FLEX',
+    'Kicker:': 'K',
+    'Defensive Team:': 'DEF',
+    'Bench:': 'BN',
+  }
+  formattedLeague.roster_positions = league.roster_positions.map((o) => {
+    return Array(Number(o.value)).fill(positionMap[o.key]);
+  }).flat();
+
+  const formatScoring = (key, pointPer) => {
+    let val;
+    if (pointPer) {
+      const [ points, yards ] = league.scoring_settings[key].split(' point per ');
+      val = parseInt(points) / parseInt(yards);
+    } else {
+      val = parseInt(league.scoring_settings[key]);
+    }
+
+    if (val < 0){
+      return val;
+    }
+
+    return val || 0;
+  }
+
+  formattedLeague.scoring_settings = {
+    blk_kick: formatScoring('Blocked Kicks:'),
+    def_2pt: formatScoring('Team Def 2-point Return:'),
+    def_kr_td: formatScoring('Kickoff and Punt Return Touchdowns:'),
+    def_pr_td: formatScoring('Kickoff and Punt Return Touchdowns:'),
+    def_st_ff: formatScoring('Fumbles Forced:'),
+    def_st_fum_rec: formatScoring('Fumbles Recovered:'),
+    def_st_td: formatScoring('Touchdowns:'),
+    def_td: formatScoring('Touchdowns:'),
+    ff: formatScoring('Fumbles Forced:'),
+    fgm_0_19: formatScoring('FG Made 0-19:'),
+    fgm_20_29: formatScoring('FG Made 20-29:'),
+    fgm_30_39: formatScoring('FG Made 30-39:'),
+    fgm_40_49: formatScoring('FG Made 40-49:'),
+    fgm_50p: formatScoring('FG Made 50+:'),
+    fgmiss_0_19: formatScoring('FG Missed 0-19:'),
+    fgmiss_20_29: formatScoring('FG Missed 20-29:'),
+    fgmiss: formatScoring('FG Missed:'),
+    fum_lost: formatScoring('Fumbles Lost:'),
+    fum_rec: formatScoring('Fumbles Recovered:'),
+    fum: 0.0,
+    int: formatScoring('Interceptions:'),
+    pass_2pt: formatScoring('2-Point Conversions:'),
+    pass_int: formatScoring('Interceptions Thrown:'),
+    pass_td: formatScoring('Passing Touchdowns:'),
+    pass_yd: formatScoring('Passing Yards:', true),
+    pts_allow_0: formatScoring('Points Allowed 0:'),
+    pts_allow_1_6: formatScoring('Points Allowed 1-6:'),
+    pts_allow_14_20: formatScoring('Points Allowed 14-20:'),
+    pts_allow_21_27: formatScoring('Points Allowed 21-27:'),
+    pts_allow_28_34: formatScoring('Points Allowed 28-34:'),
+    pts_allow_35p: formatScoring('Points Allowed 35+:'),
+    pts_allow_7_13: formatScoring('Points Allowed 7-13:'),
+    rec_2pt: formatScoring('2-Point Conversions:'),
+    rec_td: formatScoring('Receiving Touchdowns:'),
+    rec_yd: formatScoring('Receiving Yards:', true),
+    rec: formatScoring('Receptions:'),
+    rush_2pt: formatScoring('2-Point Conversions:'),
+    rush_td: formatScoring('Rushing Touchdowns:'),
+    rush_yd: formatScoring('Rushing Yards:', true),
+    sack: formatScoring('Sacks:'),
+    safe: formatScoring('Safeties:'),
+    st_ff: formatScoring('Fumbles Forced:'),
+    st_fum_rec: formatScoring('Fumbles Recovered:'),
+    st_td: formatScoring('Touchdowns:'),
+    xpm: formatScoring('PAT Made:'),
+    xpmiss: formatScoring('PAT Missed:'),
+  };
+
+  writeFileSync(`./data/${year}/league.json`, JSON.stringify(formattedLeague), 'utf-8', (err) => {
+    if (err) throw err;
+  });
+
+  console.log(`${year} league data written to ./data/${year}/league.json`);
+};
+
+// createLeagueJson(2018);
+
+
+// DRAFT
+const createDraftJson = (year) => {
+  const draft = require(`./raw_data/${year}/draft.json`);
+  let draft_order = {};
+  let slots_to_roster_id = {};
+
+  draft.draft_order.forEach((id, i) => {
+    try {
+      const roster = getRosterByOwnerId(year, id);
+      draft_order[id] = i + 1;
+      slots_to_roster_id[i + 1] = roster.roster_id;
+    } catch (err) {
+      console.log(year, id);
+    }
+  });
+
+  const formattedDraft = {
+    type: 'snake',
+    status: 'complete',
+    start_time: new Date(`01/09/${year}`).getTime(),
+    sport: 'nfl',
+    season_type: 'regular',
+    season: String(year),
+    metadata: {
+      scoring_type: 'std',
+      name: `${year} Chumbo Draft`,
+    },
+    league_id: `chumbo_${year}`,
+    settings: {
+      teams: draft.draft_order.length,
+      rounds: 15,
+      slots_wr: 2,
+      slots_te: 1,
+      slots_rb: 2,
+      slots_qb: 1,
+      slots_k: 1,
+      slots_flex: 1,
+      slots_def: 1,
+      slots_bn: 6,
+      reversal_round: 0,
+    },
+    draft_order,
+    slots_to_roster_id,
+  };
+
+  writeFileSync(`./data/${year}/draft.json`, JSON.stringify(formattedDraft), 'utf-8', (err) => {
+    if (err) throw err;
+  });
+  console.log(`${year} draft info written to ./data/${year}/draft.json`);
+};
+
+// createDraftJson(2012);
+
+// CREATE ALL DATA
 const createJsonForYear = (year) => {
+  createLeagueJson(year);
   createUsersJson(year);
   createRostersJson(year);
-  createPicksJson(year);
+  // createDraftJson(year);
+  // createPicksJson(year);
+  createBracketsJson(year);
+  createBracketsJson(year, 'consolation');
   createMatchupsJson([ year ], [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]);
 };
 
-createJsonForYear(2013);
+// [2012,2013,2014,2015,2016,2017,2018,2019].forEach((y) => {
+//   createRostersJson(y)
+// })
+// createJsonForYear(2019);
 
+// const x = require('./data/2015/matchups/12.json');
 
-
-
-
-
-
-
-
+// x.forEach((m) => {
+//   console.log(m);
+// })
 
 
 
 // LOGGING PLAYGROUND
+
+const formatNumber = (whole, decimal) => whole + (decimal / 100);
+
+const logRecords = (years) => {
+  let table = [];
+  years.forEach((year) => {
+    const y = require(`./data/${year}/rosters.json`);
+  
+  
+    y.forEach((m) => {
+      let team = table.find((z) => z.owner_id === m.owner_id);
+
+      if (team) {
+        team.wins += m.settings.wins;
+        team.losses += m.settings.losses;
+        team.ties += m.settings.ties;
+        team.fpts += formatNumber(m.settings.fpts, m.settings.fpts_decimal);
+        team.fpts_against += formatNumber(m.settings.fpts_against, m.settings.fpts_against_decimal);
+
+        if (m.metadata.co_owner) {
+          console.log(m.metadata.co_owner);
+          team.losses -= m.metadata.co_owner.losses;
+          team.wins -= m.metadata.co_owner.wins;
+          team.ties -= m.metadata.co_owner.ties;
+        }
+      } else {
+        const data = {
+          owner_id: m.owner_id,
+          name: getUserByOwnerId(year, m.owner_id).display_name,
+          wins: m.settings.wins,
+          losses: m.settings.losses,
+          ties: m.settings.ties,
+          perc: null,
+          fpts: formatNumber(m.settings.fpts, m.settings.fpts_decimal),
+          fpts_avg: null,
+          fpts_against: formatNumber(m.settings.fpts_against, m.settings.fpts_against_decimal),
+        };
+
+        if (m.metadata.co_owner) {
+          data.losses -= m.metadata.co_owner.losses;
+          data.wins -= m.metadata.co_owner.wins;
+          data.ties -= m.metadata.co_owner.ties || 0;
+        }
+
+        table.push(data);
+      }
+    });
+  });
+  
+  console.table(table.map((x) => {
+    return Object.assign(x, {
+      perc: ((x.wins + (x.ties / 2)) / (x.wins + x.losses + x.ties) * 100).toFixed(2),
+      fpts_avg: (x.fpts / (x.wins + x.losses + x.ties)),
+    });
+  }).sort((a,b) => b.perc - a.perc || b.wins - a.wins || b.fpts - a.fpts));
+}
+
+// logRecords([ 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]);
 
 const logWinnersBracket = (year) => {
   const winnersBracket = require(`./data/${year}/winners_bracket.json`);

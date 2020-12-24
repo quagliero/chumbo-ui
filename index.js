@@ -38,7 +38,7 @@ const managers = [
     teamId: '2',
     sleeper: {
       id: '428943291145265152',
-      displayname: 'jmshelley',
+      display_name: 'jmshelley',
     },
   },
   {
@@ -90,8 +90,8 @@ const managers = [
     },
   },
   {
-    id: 'jimbo',
-    name: 'jimbo',
+    id: 'jimmie',
+    name: 'jimmie',
     teamName: 'Jimbo\'s Chiefs',
     active: false,
     userId: ['576154'],
@@ -597,19 +597,6 @@ const rosterHistory = (yrs, team, title) => {
   });
 };
 
-// rosterHistory(years, 1, 'THD');
-// rosterHistory(years, 2, 'Jay');
-// rosterHistory(years, 3, 'Hadkiss');
-// rosterHistory(years, 4, 'Fin');
-// rosterHistory(years, 5, 'Dix');
-// rosterHistory(years, 6, 'Ant');
-// rosterHistory(years, 7, 'Jimbo / Brock / Sol');
-// rosterHistory(years, 8, 'Kitch');
-// rosterHistory(years, 9, 'Karsten / HTC');
-// rosterHistory(years, 10, 'Rich');
-// rosterHistory([2014,2015,2016,2017,2018,2019,2020], 11, 'Sol / Nick');
-// rosterHistory([2014,2015,2016,2017,2018,2019,2020], 12, 'Sudio / Ryan');
-
 const makeOutcomeAmendments = (standings, years) => {
   // in here we apply all the hacks that take/give wins to the right
   // people based on times when managers left and others took over
@@ -761,8 +748,8 @@ const scrape = (yrs, title, tiers) => {
         // medianFor,
         avgAgainst,
         // medianAgainst,
-        divWins: formatNumber(team.divWins),
-        divLosses: formatNumber(team.divLosses),
+        // divWins: formatNumber(team.divWins),
+        // divLosses: formatNumber(team.divLosses),
       });
     }, adjusted);
 
@@ -770,7 +757,7 @@ const scrape = (yrs, title, tiers) => {
       r.filter((team) => {
         // remove inactive teams
         if (tiers) {
-          return ['karsten', 'phil', 'jimbo', 'brock', 'Disciples of Aaron Rodgers', 'chris', 'Suh Suh Sudio'].every((tm) => team.name !== tm);
+          return ['karsten', 'phil', 'jimmie', 'brock', 'Disciples of Aaron Rodgers', 'chris', 'Suh Suh Sudio'].every((tm) => team.name !== tm);
         }
 
         return r.identity;
@@ -783,7 +770,7 @@ const scrape = (yrs, title, tiers) => {
         r.descend(r.prop('wins')),
       ]),
     )(averaged);
-    
+
     const tierList = r.map((team) => team.name, sorted);
 
     const tableData = r.map(r.pipe(
@@ -921,7 +908,7 @@ const getWeekRecord = (week) => Promise.all(getWeek(week)).then((years) => {
       against: formatNumber(team.against / total),
     });
   })
-    .filter((team) => ['karsten', 'phil', 'brock', 'Disciples of Aaron Rodgers', 'jimbo', 'chris', 'Suh Suh Sudio'].every((tm) => team.name !== tm))
+    .filter((team) => ['karsten', 'phil', 'brock', 'Disciples of Aaron Rodgers', 'jimmie', 'chris', 'Suh Suh Sudio'].every((tm) => team.name !== tm))
     .sort((a, b) => {
       if (a.winPerc > b.winPerc) {
         return -1;
@@ -1072,7 +1059,6 @@ const parsePicks = (year) => new Promise((resolve) => {
 
 // parsePicks(2012);
 
-
 // Users
 
 const parseUsers = (year) => new Promise((resolve) => {
@@ -1082,11 +1068,36 @@ const parseUsers = (year) => new Promise((resolve) => {
 
     const $owners = $('#leagueOwners .tableType-team > tbody > tr');
 
+    // Sol
+    if (year === 2015) {
+      users.push({
+        user_id: managers[12].sleeper.id,
+        display_name: managers[12].sleeper.display_name,
+        league_id: `chumbo_${year}`,
+        metadata: {
+          team_name: managers[12].teamName,
+        }
+      });
+    }
+
+    // Phil
+    if (year === 2016) {
+      users.push({
+        user_id: managers[14].sleeper.id,
+        display_name: managers[14].sleeper.display_name,
+        league_id: `chumbo_${year}`,
+        metadata: {
+          team_name: managers[14].teamName,
+        }
+      });
+    }
+
     $owners.each((i, el) => {
       const $team = $(el).find('.teamImg');
       const avatar = $team.find('img').attr('src');
       const team_name = $team.find('img').attr('alt');
-      const manager = getManager(year, 1, $team.attr('class').split('teamId-')[1]);
+      const manager = getManager(year, 16, $team.attr('class').split('teamId-')[1]);
+
       users.push({
         user_id: manager.sleeper.id,
         display_name: manager.sleeper.display_name,
@@ -1105,7 +1116,7 @@ const parseUsers = (year) => new Promise((resolve) => {
   });
 });
 
-// parseUsers(2012);
+// parseUsers(2016);
 
 const parseRosters = (year) => new Promise(() => {
   const rosters = [];
@@ -1119,10 +1130,12 @@ const parseRosters = (year) => new Promise(() => {
             const $ = cheerio.load(html);
 
             const $team = $(`#leagueHistoryStandings .tableType-team > tbody > tr.team-${i}`);
-            const record = $team.find('.teamRecord').text().split('-');
+            const record = $team.find('.teamRecord').html().split('-')
             const points = $team.find('.teamPts').first().text().split('.');
             const points_against = $team.find('.teamPts.last').text().split('.');
-            const owner_id = getManager(year, 16, i).sleeper.id;
+            const manager = getManager(year, 16, i);
+
+            const owner_id = manager.sleeper.id;
             const roster_id = i;
             const wins = Number(record[0]);
             const losses = Number(record[1]);
@@ -1131,6 +1144,25 @@ const parseRosters = (year) => new Promise(() => {
             const fpts_decimal = Number(points[1]);
             const fpts_against = parseFloat(points_against[0].replace(/,/g, ''));
             const fpts_against_decimal = Number(points_against[1]);
+            const metadata = {};
+
+            // phil took over from Sol in 2015
+            if (year === 2015 && manager.id === 'phil') {
+              metadata.co_owner = {
+                owner_id: managers[12].sleeper.id, // sol
+                wins: 2,
+                losses: 6,
+              };
+            }
+
+            // Nick took over from Phil in 2016
+            if (year === 2016 && manager.id === 'nick') {
+              metadata.co_owner = {
+                owner_id: managers[14].sleeper.id, // phil
+                wins: 3,
+                losses: 6,
+              };
+            }
 
             resultResolve({
               league_id: `chumbo_${year}`,
@@ -1146,6 +1178,7 @@ const parseRosters = (year) => new Promise(() => {
                 fpts_against_decimal,
               },
               players: roster,
+              metadata,
             });
           });
         }).then((rosterAndResult) => {
@@ -1176,9 +1209,7 @@ const parseRosters = (year) => new Promise(() => {
                     );
                   }
                 });
-                rosterAndResultAndMoves.metadata = {
-                  record: record.join(''),
-                };
+                rosterAndResultAndMoves.metadata.record = record.join('');
 
                 resolve(rosterAndResultAndMoves);
               });
@@ -1243,13 +1274,217 @@ const parseSettings = (year) => new Promise((resolve) => {
   });
 });
 
-parseSettings(2012);
+// parseSettings(2018);
+
+const parseBracket = (year, consolation) => new Promise((resolve) => {
+  const bracketType = consolation ? 'consolation' : 'championship';
+  const fileName = consolation ? 'losers_bracket' : 'winners_bracket';
+  rp(`${urlBase}/${year}/playoffs?bracketType=${bracketType}&standingsTab=playoffs`).then((html) => {
+    const bracket = [];
+    const $ = cheerio.load(html);
+
+    const $bracket = $(`.playoffType-${bracketType} .playoffContent`);
+
+    const $weeks = $bracket.find('> li');
+    let matchup = 0;
+
+    $weeks.each((i, el) => {
+      const round = i + 1;
+      // filter out 'hidden' <li>s by only getting those with pg class
+      const $matchups = $(el).find('li[class^=pg]');
+
+      $matchups.each((k, el) => {
+        const $matchup = $(el);
+        const isBye = $matchup.find('.teamWrap-bye').length > 0;
+
+        if (!isBye) {
+          // don't cound bye weeks as matchups
+          matchup++;
+          const $team1 = $matchup.find('.teamWrap-1');
+          const $team2 = $matchup.find('.teamWrap-2');
+          const manager1 = getManager(year, 16, $team1.find('.teamName').attr('class')?.split('teamId-')[1]);
+          const manager2 = getManager(year, 16, $team2.find('.teamName').attr('class')?.split('teamId-')[1]);
+          let winner, loser;
+  
+          // the higher seed won
+          if ($matchup.hasClass('win')) {
+            winner = manager1.sleeper.id;
+            loser = manager2.sleeper.id;
+            // console.log(`${manager1.teamName} beat ${manager2.teamName}`);
+          } else {
+          // the higher seed lost
+            winner = manager2.sleeper.id;
+            loser = manager1.sleeper.id;
+            // console.log(`${manager2.teamName} beat ${manager1.teamName}`);
+          }
+  
+          const data = {
+            round,
+            matchup,
+            winner,
+            loser,
+            team_1: manager1.sleeper.id,
+            team_2: manager2.sleeper.id,
+          };
+  
+          if (true) {
+            // semi final week
+            if (($weeks.length === 3 && i === 1) || i === 0) {
+              // first 2 matchups are semis
+              // the rest would be byes so we can ignore
+              if (k <= 1) {
+                const t1_from = bracket.reduce((obj, b) => {
+                  if (b.round === round - 1) {
+                    if (b.winner === manager1.sleeper.id) {
+                      obj.w = b.matchup;
+                      return obj;
+                    }
+                  }
+                  return obj;
+                }, {});
+                if (t1_from.w) {
+                  data.t1_from = t1_from;
+                }
+                const t2_from = bracket.reduce((obj, b) => {
+                  if (b.round === round - 1) {
+                    if (b.winner === manager2.sleeper.id) {
+                      obj.w = b.matchup;
+                      return obj;
+                    }
+                  }
+                  return obj;
+                }, {});
+                if (t2_from.w) {
+                  data.t2_from = t2_from;
+                }
+              }
+
+            // finals week
+            } else if (($weeks.length === 3 && i === 2) || i === 1) {
+              data.p = parseInt($matchup.find('h5').text()) || 1; // e.g. 7th place game becomes 7, 'championship' is 1
+
+              // only first matchup is the bowl
+              if (k === 0) {
+                const t1_from = bracket.reduce((obj, b) => {
+                  if (b.round === round - 1) {
+                    if (b.winner === manager1.sleeper.id) {
+                      obj.w = b.matchup;
+                      return obj;
+                    }
+                  }
+                  return obj;
+                }, {});
+                if (t1_from.w) {
+                  data.t1_from = t1_from;
+                }
+                const t2_from = bracket.reduce((obj, b) => {
+                  if (b.round === round - 1) {
+                    if (b.winner === manager2.sleeper.id) {
+                      obj.w = b.matchup;
+                      return obj;
+                    }
+                  }
+                  return obj;
+                }, {});
+                if (t2_from.w) {
+                  data.t2_from = t2_from;
+                }
+              } else {
+                // losers
+                const t1_from = bracket.reduce((obj, b) => {
+                  if (b.round === round - 2) {
+                    if (b.loser === manager1.sleeper.id) {
+                      obj.l = b.matchup;
+                      return obj;
+                    }
+                  }
+                  if (b.round === round - 1) {
+                    if (b.loser === manager1.sleeper.id) {
+                      obj.l = b.matchup;
+                      return obj;
+                    }
+                  }
+                  return obj;
+                }, {});
+                if (t1_from.l) {
+                  data.t1_from = t1_from;
+                }
+                const t2_from = bracket.reduce((obj, b) => {
+                  if (b.round === round - 2) {
+                    if (b.loser === manager2.sleeper.id) {
+                      obj.l = b.matchup;
+                      return obj;
+                    }
+                  }
+                  if (b.round === round - 1) {
+                    if (b.loser === manager2.sleeper.id) {
+                      obj.l = b.matchup;
+                      return obj;
+                    }
+                  }
+                  return obj;
+                }, {});
+                if (t2_from.l) {
+                  data.t2_from = t2_from;
+                }
+              }
+            }
+          }
+  
+          bracket.push(data);
+        }
+
+      });
+    });
+
+    fs.writeFileSync(`./raw_data/${year}/${fileName}.json`, JSON.stringify(bracket, null, 2), 'utf-8', (err) => {
+      if (err) throw err;
+    })
+    console.log(`${year} ${bracketType} bracket written to ./raw_data/${year}/${fileName}.json`);
+    resolve(bracket);
+  });
+
+});
+
+// parseBracket(2014);
+// parseBracket(2014, true);
+
+const buildDraft = (year) => new Promise((resolve) => {
+  const orderMap = {
+    2012: [ 'jay', 'fin', 'jimmie', 'dix', 'thd', 'hadkiss', 'rich', 'kitch', 'karsten', 'ant' ],
+    2013: [ 'brock', 'rich', 'jay', 'thd', 'ant', 'dix', 'hadkiss', 'kitch', 'htc', 'fin' ],
+    2014: [ 'htc', 'ant', 'thd', 'kitch', 'jay', 'hadkiss', 'fin', 'dix', 'brock', 'sol', 'chris', 'rich' ],
+    2015: [ 'kitch', 'jay', 'rich', 'hadkiss', 'brock', 'thd', 'ant', 'htc', 'fin', 'chris', 'dix', 'sol' ],
+    2016: [ 'sol', 'ant', 'htc', 'dix', 'jay', 'thd', 'fin', 'phil', 'rich', 'kitch', 'chris', 'htc' ],
+    2017: [ 'hadkiss', 'sol', 'kitch', 'htc', 'dix', 'jay', 'fin', 'nick', 'chris', 'rich', 'ant', 'thd'],
+    2018: [ 'jay', 'sol', 'ant', 'chris', 'nick', 'fin', 'hadkiss', 'thd', 'dix', 'rich', 'kitch', 'htc']
+  };
+
+  const draft = {
+    draft_order: orderMap[year].map((id) => {
+      return managers.find((m) => m.id === id).sleeper.id;
+    }),
+  }
+
+  fs.writeFileSync(`./raw_data/${year}/draft.json`, JSON.stringify(draft, null, 2), 'utf-8', (err) => {
+    if (err) throw err;
+  });
+  console.log(`${year} draft order written to ./raw_data/${year}/draft.json`);
+
+  resolve(draft);
+});
+
+// buildDraft(2012);
 
 const buildRawDataForYear = (year) => {
   const promises = [
+    parseSettings(year),
     parseUsers(year),
     parseRosters(year),
+    buildDraft(year),
     parsePicks(year),
+    parseBracket(year), // championship
+    parseBracket(year, true), // consolation
   ];
 
   for (let i = 1; i <= 16; i++) {
@@ -1261,4 +1496,6 @@ const buildRawDataForYear = (year) => {
   })
 }
 
-// buildRawDataForYear(2013);
+// buildRawDataForYear(2019);
+
+parseRosters(2012);
