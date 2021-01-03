@@ -1,16 +1,15 @@
 .wiki {
-  display: flex;
   padding: 2rem 0;
 }
 
 .wiki aside {
   margin-right: 1rem;
+  margin-bottom: 2rem;
   flex: 1;
 }
 
-.wiki nav {
-  position: sticky;
-  top: 100px;
+.wiki aside h4 {
+  margin-top: 0;
 }
 
 .wiki nav a {
@@ -39,4 +38,15 @@
   background: #efefef;
   margin: 0;
   padding: 0.5rem 1rem;
-};
+}
+
+@media screen and (min-width: 768px) {
+  .wiki {
+    display: flex;
+  }
+
+  .wiki nav {
+    position: sticky;
+    top: 100px;
+  }
+}

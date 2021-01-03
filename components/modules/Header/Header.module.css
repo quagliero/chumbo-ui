@@ -22,7 +22,6 @@
   padding-top: 0.5rem;
   margin-right: 1rem;
   order: 1;
-  flex: 1;
 }
 
 .menu {
@@ -58,7 +57,6 @@
 .extra {
   display: flex;
   align-items: center;
-  margin-left: 3rem;
   justify-content: flex-end;
   order: 2;
   flex: 1;
@@ -81,10 +79,13 @@
 @media screen and (min-width: 768px) {
   .menu {
     flex-basis: auto;
+    flex: 1;
     order: 2;
     justify-content: space-around;
   }
   .extra {
     order: 3;
+    margin-left: 2rem;
+    flex: 0;
   }
 }

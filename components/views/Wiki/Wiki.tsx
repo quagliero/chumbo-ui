@@ -7,6 +7,7 @@ const Wiki = () => (
     <div className={styles.wiki}>
       <aside>
         <nav>
+          <h4>Sections</h4>
           <a href="#2020-covid-contingency">COVID (2020)</a>
           <a href="#tiers">Tiers</a>
           <a href="#division-selection">Division Selection</a>
