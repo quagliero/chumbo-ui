@@ -9,6 +9,7 @@ export interface OuterProps {
 
 const kindMap = {
   primary: styles['button--primary'],
+  secondary: styles['button--secondary'],
 };
 
 const Button = ({

@@ -34,6 +34,17 @@ const Header = () => {
           </div>
           <div className={styles.extra}>
             <Link
+              href="/wiki"
+              passHref
+            >
+              <Button
+                kind="secondary"
+                component="a"
+              >
+                {'Wiki'}
+              </Button>
+            </Link>
+            <Link
               href="https://sleeper.app/leagues/651106865610084352"
               passHref
             >

@@ -1,0 +1,42 @@
+.wiki {
+  display: flex;
+  padding: 2rem 0;
+}
+
+.wiki aside {
+  margin-right: 1rem;
+  flex: 1;
+}
+
+.wiki nav {
+  position: sticky;
+  top: 100px;
+}
+
+.wiki nav a {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #0076ff;
+}
+
+.wiki nav a:hover {
+  text-decoration: none;
+}
+
+.wiki article {
+  flex: 3;
+}
+
+.wiki article h1:first-of-type {
+  margin-top: 0;
+}
+
+.wiki article h2[id] {
+  scroll-margin-top: 100px;
+}
+
+.wiki blockquote {
+  background: #efefef;
+  margin: 0;
+  padding: 0.5rem 1rem;
+};
