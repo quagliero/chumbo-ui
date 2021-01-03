@@ -27,7 +27,10 @@ const Header = () => {
           </Link>
           <div className={styles.menu}>
             {routes.map((route) => (
-              <Link href={`/${route.toLocaleLowerCase()}`}>
+              <Link
+                key={route}
+                href={`/${route.toLocaleLowerCase()}`}
+              >
                 {route}
               </Link>
             ))}
