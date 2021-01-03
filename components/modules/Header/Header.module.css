@@ -1,0 +1,90 @@
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #eaeaea;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+}
+
+.nav {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  text-decoration: none;
+}
+
+.nav .logo {
+  padding-top: 0.5rem;
+  margin-right: 1rem;
+  order: 1;
+  flex: 1;
+}
+
+.menu {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex: 1;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: space-between;
+  order: 3;
+  overflow-x: scroll;
+  /* Hide scrollbar */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.menu::-webkit-scrollbar {
+  display: none;
+}
+
+.menu a {
+  color: #696969;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s ease;
+}
+
+.menu a:hover {
+  color: #000;
+}
+
+.extra {
+  display: flex;
+  align-items: center;
+  margin-left: 3rem;
+  justify-content: flex-end;
+  order: 2;
+  flex: 1;
+}
+
+.extra a {
+  margin-left: 1rem;
+}
+
+.icon {
+  opacity: 0.6;
+  display: inline-flex;
+  transition: opacity 0.2s ease;
+}
+
+.icon:hover {
+  opacity: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .menu {
+    flex-basis: auto;
+    order: 2;
+    justify-content: space-around;
+  }
+  .extra {
+    order: 3;
+  }
+}

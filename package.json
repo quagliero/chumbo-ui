@@ -1,0 +1,34 @@
+{
+  "name": "chumbo-ui",
+  "version": "0.0.0",
+  "description": "The Chumbo Almanac",
+  "scripts": {
+    "build": "gasket build",
+    "start": "gasket start",
+    "local": "gasket local",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "@gasket/assets": "^5.6.0",
+    "@gasket/cli": "^5.7.0",
+    "@gasket/log": "^5.6.0",
+    "@gasket/plugin-jest": "^5.6.0",
+    "@gasket/preset-nextjs": "^5.6.0",
+    "express": "^4.16.3",
+    "next": "^10.0.4",
+    "prop-types": "^15.6.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-query": "^3.5.9"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.19",
+    "@types/react": "^17.0.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "jest": "^24.8.0",
+    "typescript": "^4.1.3"
+  }
+}
