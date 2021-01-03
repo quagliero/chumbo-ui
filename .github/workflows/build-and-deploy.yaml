@@ -16,11 +16,12 @@ jobs:
         run: |
           npm ci
           npm run build
+          npm run static
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.6.1
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: build
+          FOLDER: out
           CLEAN: true

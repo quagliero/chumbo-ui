@@ -6,6 +6,7 @@
     "build": "gasket build",
     "start": "gasket start",
     "local": "gasket local",
+    "static": "next export",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage"
