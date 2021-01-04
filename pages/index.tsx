@@ -5,7 +5,7 @@ import Home from '../components/views/Home';
 
 export const IndexPage = () => (
   <Layout
-    title="The Chumbo"
+    title="The Chumbo | Home"
     description="World's greatest fantasy football league."
   >
     <Home/>

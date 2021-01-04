@@ -1,0 +1,45 @@
+.hofers {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hofers:hover .hofer img {
+  filter: grayscale(33%);
+}
+
+.hofers:hover .hofer:hover img,
+.hofers:hover .hofer--active img {
+  filter: grayscale(0);
+}
+
+.hofer {
+  flex: 1;
+  min-width: 90px;
+  overflow: hidden;
+  transition: flex 0.2s ease;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  .hofer--active {
+    flex: 3;
+  }
+}
+
+.hofer h3 {
+  display: flex;
+  justify-content: center;
+}
+
+.hofer--active img {
+  filter: grayscale(0);
+}
+
+.hofer img {
+  height: 40vh;
+  max-width: none;
+  min-width: 100%;
+  transform: translateX(-50%);
+  margin-left: 50%;
+  transition: filter 0.2s ease;
+}

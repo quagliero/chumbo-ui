@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Logo from '../../elements/Logo';
 import Button from '../../elements/Button';
@@ -7,8 +8,8 @@ import Container from '../../layout/Container';
 import styles from './Header.module.css';
 
 const Header = () => {
-
-  const routes = [
+  const router = useRouter();
+  const pages = [
     'Almanac',
     'History',
     'Drafts',
@@ -18,7 +19,7 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <Container>
+      <Container flush={true}>
         <nav className={styles.nav}>
           <Link href="/">
             <a className={styles.logo}>
@@ -26,14 +27,21 @@ const Header = () => {
             </a>
           </Link>
           <div className={styles.menu}>
-            {routes.map((route) => (
-              <Link
-                key={route}
-                href={`/${route.toLocaleLowerCase()}`}
-              >
-                {route}
-              </Link>
-            ))}
+            {pages.map((route) => {
+              const href = `/${route.toLocaleLowerCase()}`;
+              const activeClass = router.pathname === href ? styles['menu__link--active'] : '';
+
+              return (
+                <Link
+                  key={route}
+                  href={href}
+                >
+                  <a className={`${styles.menu__link} ${activeClass}`}>
+                    {route}
+                  </a>
+                </Link>
+              );
+            })}
           </div>
           <div className={styles.extra}>
             <Link

@@ -1,12 +1,11 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import Layout from '../components/layout/Layout';
 import Wiki from '../components/views/Wiki';
 
 export const WikiPage = () => (
   <Layout
-    title="The Chumbo"
-    description="World's greatest fantasy football league."
+    title="The Chumbo | Wiki"
+    description="A place for all things Chumbo that get asked, answered, and then usually forgotten."
   >
     <Wiki/>
   </Layout>

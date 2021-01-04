@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   flex: 1;
-  background: linear-gradient(145deg, #f44336, #2196f3, #00c853, #ffc107, #673ab7);
+  background-image: linear-gradient(145deg, #f44336, #2196f3, #00c853, #ffc107, #673ab7);
   background-size: 1000% 1000%;
   animation: gradient 60s ease infinite;
   color: #fff;
