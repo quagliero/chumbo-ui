@@ -8,10 +8,10 @@ const HoF = () => {
 
   return (
     <Container flush={true}>
-      <section>
+      <article>
         <div className={styles.hofers}>
           {hofers.map((hofer) => (
-            <article
+            <figure
               className={`${styles.hofer} ${active?.id === hofer.id ? styles['hofer--active'] : ''}`}
               onClick={() => setActive(hofers.find(x => x.id === hofer.id))}
             >
@@ -20,18 +20,27 @@ const HoF = () => {
                 src={`/images/hof-${hofer.id}-action.jpg`}
                 alt={hofer.name}
               />
-            </article>
+              <figcaption className={styles.figtext}>
+                {active && (
+                  <>
+                    <h2>{hofer.name}</h2>
+                    <h5>{hofer.position}</h5>
+                    <h4>{hofer.manager}</h4>
+                  </>
+                )}
+              </figcaption>
+            </figure>
           ))}
         </div>
-        <figure>
+        <section className={styles.text}>
           {active && (
             <>
-              <h3>{active.name} - {active.position}</h3>
-              <h3>{active.year} inductee by {active.manager}</h3>
+              <h2>{active.name} - {active.position}</h2>
+              <h3>{`Inducted by ${active.manager}`}</h3>
             </>
           )}
-        </figure>
-      </section>
+        </section>
+      </article>
     </Container>
   )
 };

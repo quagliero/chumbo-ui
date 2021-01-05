@@ -16,6 +16,7 @@ body {
   font-feature-settings: 'kern';
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  color: #111;
 }
 
 img {

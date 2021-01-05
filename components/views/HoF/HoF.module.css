@@ -1,29 +1,26 @@
 .hofers {
   display: flex;
   flex-wrap: wrap;
+  padding: 1rem 0;
 }
 
 .hofers:hover .hofer img {
-  filter: grayscale(33%);
+  filter: grayscale(33%) saturate(100%);
 }
 
 .hofers:hover .hofer:hover img,
 .hofers:hover .hofer--active img {
-  filter: grayscale(0);
+  filter: saturate(120%) grayscale(0);
 }
 
 .hofer {
   flex: 1;
-  min-width: 90px;
+  flex-basis: 50%;
+  min-width: 85px;
   overflow: hidden;
   transition: flex 0.2s ease;
-  cursor: pointer;
-}
-
-@media screen and (min-width: 768px) {
-  .hofer--active {
-    flex: 3;
-  }
+  margin: 0;
+  padding: 0;
 }
 
 .hofer h3 {
@@ -32,7 +29,7 @@
 }
 
 .hofer--active img {
-  filter: grayscale(0);
+  filter: grayscale(0) saturate(120%);
 }
 
 .hofer img {
@@ -42,4 +39,43 @@
   transform: translateX(-50%);
   margin-left: 50%;
   transition: filter 0.2s ease;
+  display: block;
+}
+
+.figtext {
+  padding: 1rem;
+  margin: 0;
+}
+
+.figtext h2,
+.figtext h4,
+.figtext h5 {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.text {
+  padding: 1rem 2rem;
+  display: none;
+}
+
+.text h2 {
+  font-weight: 800;
+}
+
+@media screen and (min-width: 768px) {
+  .hofer {
+    flex-basis: 50%;
+    cursor: pointer;
+    flex-basis: 0;
+  }
+  .figtext {
+    display: none;
+  }
+  .hofer--active {
+    flex: 3;
+  }
+  .text {
+    display: block;
+  }
 }
