@@ -76,6 +76,10 @@
     flex: 3;
   }
   .text {
-    display: block;
+    display: flex;
+  }
+
+  .text blockquote {
+    flex-basis: 50%;
   }
 }

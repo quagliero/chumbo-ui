@@ -35,8 +35,13 @@ const HoF = () => {
         <section className={styles.text}>
           {active && (
             <>
-              <h2>{active.name} - {active.position}</h2>
-              <h3>{`Inducted by ${active.manager}`}</h3>
+              <div>
+                <h2>{active.name} - {active.position}</h2>
+                <h3>{`Inducted by ${active.manager}`}</h3>
+              </div>
+              <blockquote>
+                {active.blurb}
+              </blockquote>
             </>
           )}
         </section>
