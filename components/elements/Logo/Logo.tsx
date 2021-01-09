@@ -18,7 +18,7 @@ const Logo = ({
   const ratioWidth = height && !width ? Number(height) * 0.75 : width;
 
   return (
-    <img
+    <Image
       src="/images/chumbo-logo.png"
       alt="Chumbo"
       height={ratioHeight}

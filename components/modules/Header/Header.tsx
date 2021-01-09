@@ -75,7 +75,7 @@ const Header = () => {
               target="_blank"
               className={styles.icon}
             >
-              <img
+              <Image
                 src="/images/GitHub-Mark-120px-plus.png"
                 alt="GitHub"
                 height="24"

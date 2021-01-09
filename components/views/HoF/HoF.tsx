@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Container from '../../layout/Container';
 import styles from './HoF.module.css'
 import hofers from './hofers';
