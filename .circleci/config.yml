@@ -54,7 +54,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            rsync -avz -e "ssh" --progress --delete-before ./r/* $USER@$IP:/var/www/chumbo.ml/ui/*
+            rsync -avz -e "ssh" --progress --delete-before ./r/ $USER@$IP:/var/www/chumbo.ml/ui/
       - run:
           name: Restart process
           command: |
