@@ -30,7 +30,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: npm test
+      # - run: npm test
       - run: NODE_ENV=production npm run build
       - run: npm prune --production
       - persist_to_workspace:
