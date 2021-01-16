@@ -38,6 +38,7 @@ jobs:
           paths:
             # What the app needs to run
             - r/build
+            - r/public
             - r/node_modules
             - r/package.json
             - r/package-lock.json
