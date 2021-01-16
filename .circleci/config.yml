@@ -54,7 +54,11 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            rsync -avz -e "ssh" --progress ./r/* $USER@$IP:/var/www/chumbo.ml/ui-test/.
+            rsync -avz -e "ssh" --progress --delete-before ./r/* $USER@$IP:/var/www/chumbo.ml/ui/*
+      - run:
+          name: Restart process
+          command: |
+            ssh $USER@$IP 'pm2 restart chumbo-ui'
 
 workflows:
   version: 2.1
